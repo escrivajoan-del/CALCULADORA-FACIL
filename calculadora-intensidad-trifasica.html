@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Intensidad Trifásica | Amperios, Potencia y Voltaje</title>
+<meta name="description" content="Calculadora de intensidad trifásica online. Calcula amperios según potencia, tensión y factor de potencia en instalaciones trifásicas.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:20px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Intensidad Trifásica</h1>
+<p>Calcula la intensidad en amperios de una instalación trifásica.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-intensidad-monofasica.html">Intensidad Monofásica</a>
+<a href="calculadora-consumo-electrico.html">Consumo eléctrico</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcular intensidad trifásica</h2>
+
+<label>Potencia eléctrica</label>
+<input type="text" inputmode="decimal" id="potencia" placeholder="Ejemplo: 15000">
+
+<label>Unidad de potencia</label>
+<select id="unidadPotencia">
+<option value="w">W</option>
+<option value="kw">kW</option>
+</select>
+
+<label>Tensión trifásica (V)</label>
+<input type="text" inputmode="decimal" id="voltaje" value="400">
+
+<label>Factor de potencia cos φ</label>
+<input type="text" inputmode="decimal" id="cosfi" value="0.95">
+
+<button type="button" onclick="calcularIntensidad()">Calcular intensidad</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>Fórmula de intensidad trifásica</h2>
+
+<p>La intensidad trifásica se calcula mediante:</p>
+
+<p><strong>I = P / (√3 × V × cos φ)</strong></p>
+
+<p>
+Donde:
+</p>
+
+<ul>
+<li>P = Potencia (W)</li>
+<li>V = Tensión entre fases (V)</li>
+<li>cos φ = Factor de potencia</li>
+<li>√3 = 1,732</li>
+</ul>
+
+</div>
+
+<div class="card">
+<h2>Ejemplo práctico</h2>
+
+<p>
+Potencia = 15 kW
+</p>
+
+<p>
+Tensión = 400 V
+</p>
+
+<p>
+cos φ = 0,95
+</p>
+
+<p>
+Resultado aproximado:
+</p>
+
+<p>
+<strong>22,8 A</strong>
+</p>
+
+</div>
+
+<div class="card">
+<h2>Aplicaciones habituales</h2>
+
+<ul>
+<li>Motores eléctricos</li>
+<li>Bombas industriales</li>
+<li>Compresores</li>
+<li>Cuadros eléctricos</li>
+<li>Naves industriales</li>
+<li>Instalaciones fotovoltaicas</li>
+</ul>
+
+</div>
+
+<div class="card">
+<h2>Aviso importante</h2>
+
+<p>
+Esta calculadora es orientativa. Para dimensionar protecciones, cableado o cuadros eléctricos debe realizarse un cálculo profesional conforme al reglamento aplicable.
+</p>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function calcularIntensidad(){
+
+let potencia=convertirNumero(document.getElementById("potencia").value);
+let unidad=document.getElementById("unidadPotencia").value;
+let voltaje=convertirNumero(document.getElementById("voltaje").value);
+let cosfi=convertirNumero(document.getElementById("cosfi").value);
+
+if(isNaN(potencia)||isNaN(voltaje)||isNaN(cosfi)||potencia<=0||voltaje<=0||cosfi<=0){
+
+document.getElementById("resultado").innerHTML=
+"Introduce valores válidos.";
+
+return;
+}
+
+if(unidad==="kw"){
+potencia=potencia*1000;
+}
+
+let intensidad=potencia/(1.732*voltaje*cosfi);
+
+document.getElementById("resultado").innerHTML=
+"Intensidad trifásica: "+intensidad.toFixed(2)+" A<br>"+
+"Potencia utilizada: "+potencia.toFixed(0)+" W<br>"+
+"Tensión: "+voltaje.toFixed(0)+" V<br>"+
+"Factor de potencia: "+cosfi.toFixed(2);
+
+}
+</script>
+
+</body>
+</html>
