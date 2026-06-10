@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora Fácil</title>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+max-width:800px;
+margin:auto;
+padding:20px;
+background:#f5f5f5;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.1);
+}
+
+input{
+width:100%;
+padding:10px;
+margin:10px 0;
+}
+
+button{
+padding:10px 20px;
+background:#007bff;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+.resultado{
+margin-top:15px;
+font-size:20px;
+font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>Calculadora de IVA</h1>
+
+<input type="number" id="precio" placeholder="Introduce importe">
+
+<button onclick="calcularIVA()">
+Calcular IVA 21%
+</button>
+
+<div class="resultado" id="resultado"></div>
+
+</div>
+
+<script>
+
+function calcularIVA(){
+
+let precio =
+parseFloat(document.getElementById("precio").value);
+
+let iva = precio * 0.21;
+
+let total = precio + iva;
+
+document.getElementById("resultado").innerHTML =
+"IVA: " + iva.toFixed(2) +
+" €<br>Total: " +
+total.toFixed(2) + " €";
+
+}
+
+</script>
+
+</body>
+</html>
