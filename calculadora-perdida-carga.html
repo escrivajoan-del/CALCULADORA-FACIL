@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Pérdida de Carga | Tuberías de agua</title>
+<meta name="description" content="Calculadora de pérdida de carga online gratis. Estima la pérdida de presión en tuberías de agua según caudal, longitud, diámetro y tipo de instalación.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:20px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Pérdida de Carga</h1>
+<p>Estima la pérdida de presión en una tubería de agua.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-caudal-agua.html">Caudal</a>
+<a href="calculadora-reforma.html">Reforma</a>
+<a href="calculadora-consumo-electrico.html">Consumo eléctrico</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcula la pérdida de carga estimada</h2>
+
+<label>Caudal en litros por minuto</label>
+<input type="number" id="caudal" placeholder="Ejemplo: 20">
+
+<label>Longitud de la tubería en metros</label>
+<input type="number" id="longitud" placeholder="Ejemplo: 25">
+
+<label>Diámetro interior de la tubería en mm</label>
+<input type="number" id="diametro" placeholder="Ejemplo: 20">
+
+<label>Tipo de instalación</label>
+<select id="factor">
+<option value="1">Instalación sencilla</option>
+<option value="1.25">Con varios codos o accesorios</option>
+<option value="1.5">Instalación compleja</option>
+</select>
+
+<button onclick="calcularPerdidaCarga()">Calcular pérdida de carga</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Qué es la pérdida de carga?</h2>
+<p>
+La pérdida de carga es la reducción de presión que se produce cuando el agua circula
+por una tubería. Esta pérdida aparece por el rozamiento del agua con las paredes de
+la tubería y por elementos como codos, válvulas, filtros o cambios de dirección.
+</p>
+<p>
+Cuanto mayor sea el caudal, más larga sea la tubería o menor sea el diámetro, mayor
+será la pérdida de carga.
+</p>
+</div>
+
+<div class="card">
+<h2>¿Cómo se estima esta calculadora?</h2>
+<p>
+Esta herramienta utiliza una fórmula simplificada para ofrecer una estimación orientativa
+de la pérdida de presión. No sustituye un cálculo hidráulico profesional, pero ayuda a
+entender si una instalación puede tener demasiada pérdida por longitud, caudal o diámetro.
+</p>
+<p>
+El resultado se expresa de forma aproximada en metros de columna de agua y bares.
+</p>
+</div>
+
+<div class="card">
+<h2>Consejos para reducir la pérdida de carga</h2>
+<ul>
+<li>Usar tuberías de mayor diámetro cuando el caudal sea alto.</li>
+<li>Reducir la longitud innecesaria de la instalación.</li>
+<li>Evitar demasiados codos, curvas cerradas o accesorios.</li>
+<li>Revisar filtros, válvulas y estrechamientos.</li>
+<li>Comprobar que la presión disponible sea suficiente.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Preguntas frecuentes</h2>
+
+<h3>¿Pérdida de carga y pérdida de presión son lo mismo?</h3>
+<p>
+En la práctica suelen usarse como conceptos relacionados. La pérdida de carga expresa
+la pérdida energética del fluido y normalmente se traduce en una caída de presión.
+</p>
+
+<h3>¿Qué diámetro de tubería reduce la pérdida?</h3>
+<p>
+A igualdad de caudal y longitud, una tubería de mayor diámetro suele reducir la pérdida
+de carga, porque el agua circula con menor velocidad.
+</p>
+
+<h3>¿Esta calculadora sirve para instalaciones profesionales?</h3>
+<p>
+Sirve como orientación inicial. Para instalaciones profesionales, edificios, bombas,
+redes de riego o sistemas con exigencias técnicas, se debe realizar un cálculo hidráulico
+más preciso.
+</p>
+
+<h3>¿Por qué aumenta la pérdida con el caudal?</h3>
+<p>
+Porque al circular más agua por la misma tubería, aumenta la velocidad y el rozamiento.
+Esto genera una mayor caída de presión.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function calcularPerdidaCarga(){
+let caudal=parseFloat(document.getElementById("caudal").value);
+let longitud=parseFloat(document.getElementById("longitud").value);
+let diametro=parseFloat(document.getElementById("diametro").value);
+let factor=parseFloat(document.getElementById("factor").value);
+
+if(isNaN(caudal)||isNaN(longitud)||isNaN(diametro)||isNaN(factor)||caudal<=0||longitud<=0||diametro<=0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos.";
+return;
+}
+
+let q=caudal/60;
+let d=diametro/1000;
+let velocidad=q/1000/(Math.PI*Math.pow(d/2,2));
+
+let perdidaMetro=0.02*(Math.pow(velocidad,2)/(2*9.81))*(1/d);
+let perdidaTotal=perdidaMetro*longitud*factor;
+let bares=perdidaTotal*0.0981;
+
+document.getElementById("resultado").innerHTML=
+"Velocidad estimada: "+velocidad.toFixed(2)+" m/s<br>"+
+"Pérdida de carga aproximada: "+perdidaTotal.toFixed(2)+" m.c.a.<br>"+
+"Caída de presión aproximada: "+bares.toFixed(2)+" bar";
+}
+</script>
+
+</body>
+</html>
