@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://escrivajoan-del.github.io/CALCULADORA-FACIL/sitemap.xml
