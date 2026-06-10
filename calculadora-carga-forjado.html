@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Carga de Forjado | Peso y Sobrecarga</title>
+<meta name="description" content="Calculadora de carga de forjado online. Estima la carga total de un forjado según superficie, peso propio, pavimento, tabiquería y sobrecarga de uso.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:20px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Carga de Forjado</h1>
+<p>Calcula de forma orientativa la carga total de un forjado por metro cuadrado y por superficie.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-reforma.html">Reforma</a>
+<a href="calculadora-hormigon.html">Hormigón</a>
+<a href="calculadora-muro-carga.html">Muro de carga</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcula la carga del forjado</h2>
+
+<label>Superficie del forjado (m²)</label>
+<input type="text" inputmode="decimal" id="superficie" placeholder="Ejemplo: 80">
+
+<label>Peso propio del forjado (kg/m²)</label>
+<input type="text" inputmode="decimal" id="pesoPropio" value="300">
+
+<label>Pavimento y recrecidos (kg/m²)</label>
+<input type="text" inputmode="decimal" id="pavimento" value="100">
+
+<label>Tabiquería o cargas permanentes adicionales (kg/m²)</label>
+<input type="text" inputmode="decimal" id="tabiqueria" value="100">
+
+<label>Uso previsto</label>
+<select id="sobrecarga">
+<option value="200">Vivienda - 200 kg/m²</option>
+<option value="300">Oficina ligera - 300 kg/m²</option>
+<option value="400">Local comercial - 400 kg/m²</option>
+<option value="500">Almacén ligero - 500 kg/m²</option>
+</select>
+
+<button type="button" onclick="calcularForjado()">Calcular carga</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Qué es la carga de un forjado?</h2>
+<p>
+La carga de un forjado es el peso que debe soportar una estructura. Incluye el peso propio
+del forjado, los acabados, tabiquería, instalaciones y la sobrecarga de uso.
+</p>
+<p>
+El resultado se expresa normalmente en kg/m² o kN/m². Esta herramienta ofrece una estimación
+orientativa para entender la magnitud de las cargas.
+</p>
+</div>
+
+<div class="card">
+<h2>Tipos de cargas consideradas</h2>
+<ul>
+<li><strong>Peso propio:</strong> peso del propio forjado estructural.</li>
+<li><strong>Cargas permanentes:</strong> pavimentos, recrecidos, falsos techos o tabiquería.</li>
+<li><strong>Sobrecarga de uso:</strong> personas, mobiliario y uso previsto del espacio.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Aviso importante</h2>
+<p>
+Esta calculadora no sustituye un cálculo estructural profesional. Para reformas que afecten a
+estructura, cambios de uso, apertura de huecos, refuerzos o incremento de cargas, consulta siempre
+con un arquitecto, arquitecto técnico o ingeniero.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function calcularForjado(){
+let superficie=convertirNumero(document.getElementById("superficie").value);
+let pesoPropio=convertirNumero(document.getElementById("pesoPropio").value);
+let pavimento=convertirNumero(document.getElementById("pavimento").value);
+let tabiqueria=convertirNumero(document.getElementById("tabiqueria").value);
+let sobrecarga=convertirNumero(document.getElementById("sobrecarga").value);
+
+if(isNaN(superficie)||isNaN(pesoPropio)||isNaN(pavimento)||isNaN(tabiqueria)||isNaN(sobrecarga)||superficie<=0||pesoPropio<0||pavimento<0||tabiqueria<0||sobrecarga<0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos. Puedes usar coma o punto para decimales.";
+return;
+}
+
+let cargaPermanente=pesoPropio+pavimento+tabiqueria;
+let cargaTotal=cargaPermanente+sobrecarga;
+let cargaTotalSuperficie=cargaTotal*superficie;
+let knm2=cargaTotal*0.00981;
+
+document.getElementById("resultado").innerHTML=
+"Carga permanente: "+cargaPermanente.toFixed(0)+" kg/m²<br>"+
+"Carga total estimada: "+cargaTotal.toFixed(0)+" kg/m²<br>"+
+"Equivalente aproximado: "+knm2.toFixed(2)+" kN/m²<br>"+
+"Carga total sobre "+superficie.toFixed(1)+" m²: "+cargaTotalSuperficie.toFixed(0)+" kg";
+}
+</script>
+
+</body>
+</html>
