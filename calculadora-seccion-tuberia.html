@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Sección de Tubería | Diámetro según caudal</title>
+<meta name="description" content="Calculadora de sección de tubería online. Calcula el diámetro interior recomendado según caudal, velocidad del agua y uso de la instalación.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:20px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Sección de Tubería</h1>
+<p>Calcula el diámetro interior recomendado de una tubería según el caudal y la velocidad del agua.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-caudal-agua.html">Caudal</a>
+<a href="calculadora-perdida-carga.html">Pérdida de carga</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcula la sección de tubería</h2>
+
+<label>Caudal de agua</label>
+<input type="number" id="caudal" placeholder="Ejemplo: 30">
+
+<label>Unidad del caudal</label>
+<select id="unidad">
+<option value="lmin">Litros por minuto</option>
+<option value="lhora">Litros por hora</option>
+<option value="m3h">m³/h</option>
+</select>
+
+<label>Velocidad recomendada del agua</label>
+<select id="velocidad">
+<option value="0.8">0,8 m/s - Instalación silenciosa</option>
+<option value="1.0">1,0 m/s - Vivienda</option>
+<option value="1.5">1,5 m/s - Uso general</option>
+<option value="2.0">2,0 m/s - Piscina o riego</option>
+<option value="2.5">2,5 m/s - Alta demanda</option>
+</select>
+
+<button onclick="calcularSeccion()">Calcular sección</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Cómo se calcula la sección de una tubería?</h2>
+<p>
+La sección de una tubería depende del caudal que debe circular y de la velocidad del agua.
+A mayor caudal, mayor diámetro será necesario. A menor velocidad, la instalación suele ser
+más silenciosa y con menor pérdida de carga.
+</p>
+<p>
+La fórmula utilizada parte de la relación entre caudal, velocidad y sección:
+</p>
+<p>
+<strong>Sección = Caudal / Velocidad</strong>
+</p>
+<p>
+Después se calcula el diámetro interior equivalente de la tubería.
+</p>
+</div>
+
+<div class="card">
+<h2>Diámetros comerciales orientativos</h2>
+<p>
+El resultado muestra un diámetro interior teórico y una recomendación aproximada de diámetro
+comercial. En una instalación real también deben considerarse pérdidas de carga, presión disponible,
+longitud de tubería, material, accesorios y normativa aplicable.
+</p>
+</div>
+
+<div class="card">
+<h2>Preguntas frecuentes</h2>
+
+<h3>¿Qué velocidad de agua conviene usar?</h3>
+<p>
+Para viviendas suele utilizarse una velocidad aproximada entre 1 y 1,5 m/s. Para piscinas,
+riego o instalaciones con más caudal puede emplearse una velocidad mayor.
+</p>
+
+<h3>¿Esta calculadora sirve para piscinas?</h3>
+<p>
+Sí, puede utilizarse como orientación para tuberías de piscina, aunque también conviene comprobar
+el caudal de la bomba, el filtro y la pérdida de carga total.
+</p>
+
+<h3>¿El diámetro calculado es exacto?</h3>
+<p>
+No. Es una estimación orientativa. Para instalaciones profesionales se recomienda validar el cálculo
+con un técnico o instalador cualificado.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function calcularSeccion(){
+let caudal=parseFloat(document.getElementById("caudal").value);
+let unidad=document.getElementById("unidad").value;
+let velocidad=parseFloat(document.getElementById("velocidad").value);
+
+if(isNaN(caudal)||isNaN(velocidad)||caudal<=0||velocidad<=0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos.";
+return;
+}
+
+let caudalM3s;
+
+if(unidad==="lmin"){
+caudalM3s=caudal/1000/60;
+}else if(unidad==="lhora"){
+caudalM3s=caudal/1000/3600;
+}else{
+caudalM3s=caudal/3600;
+}
+
+let seccion=caudalM3s/velocidad;
+let diametro=Math.sqrt((4*seccion)/Math.PI);
+let diametroMM=diametro*1000;
+
+let comercial="";
+if(diametroMM<=16){comercial="20 mm exterior aprox.";}
+else if(diametroMM<=20){comercial="25 mm exterior aprox.";}
+else if(diametroMM<=26){comercial="32 mm exterior aprox.";}
+else if(diametroMM<=33){comercial="40 mm exterior aprox.";}
+else if(diametroMM<=42){comercial="50 mm exterior aprox.";}
+else if(diametroMM<=52){comercial="63 mm exterior aprox.";}
+else if(diametroMM<=66){comercial="75 mm exterior aprox.";}
+else if(diametroMM<=80){comercial="90 mm exterior aprox.";}
+else if(diametroMM<=100){comercial="110 mm exterior aprox.";}
+else{comercial="Consultar diámetro comercial superior";}
+
+document.getElementById("resultado").innerHTML=
+"Sección necesaria: "+(seccion*1000000).toFixed(2)+" mm²<br>"+
+"Diámetro interior teórico: "+diametroMM.toFixed(1)+" mm<br>"+
+"Diámetro comercial orientativo: "+comercial;
+}
+</script>
+
+</body>
+</html>
