@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Intensidad Monofásica | Amperios, Potencia y Voltaje</title>
+<meta name="description" content="Calculadora de intensidad monofásica online. Calcula amperios según potencia, tensión y factor de potencia en instalaciones eléctricas monofásicas.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:20px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Intensidad Monofásica</h1>
+<p>Calcula la intensidad en amperios de una instalación monofásica.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-consumo-electrico.html">Consumo eléctrico</a>
+<a href="calculadora-potencia-led.html">Potencia LED</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcular intensidad monofásica</h2>
+
+<label>Potencia eléctrica</label>
+<input type="text" inputmode="decimal" id="potencia" placeholder="Ejemplo: 3500">
+
+<label>Unidad de potencia</label>
+<select id="unidadPotencia">
+<option value="w">W</option>
+<option value="kw">kW</option>
+</select>
+
+<label>Tensión monofásica (V)</label>
+<input type="text" inputmode="decimal" id="voltaje" value="230">
+
+<label>Factor de potencia cos φ</label>
+<input type="text" inputmode="decimal" id="cosfi" value="1">
+
+<button type="button" onclick="calcularIntensidad()">Calcular intensidad</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>Fórmula de intensidad monofásica</h2>
+<p>La intensidad en una instalación monofásica se calcula dividiendo la potencia entre la tensión y el factor de potencia.</p>
+<p><strong>I = P / (V × cos φ)</strong></p>
+</div>
+
+<div class="card">
+<h2>Ejemplo práctico</h2>
+<p>Para una potencia de 3.500 W, una tensión de 230 V y un factor de potencia 1:</p>
+<p><strong>I = 3500 / 230 = 15,22 A</strong></p>
+</div>
+
+<div class="card">
+<h2>Aviso importante</h2>
+<p>Esta calculadora es orientativa. Para instalaciones eléctricas reales, protecciones, secciones de cable o cumplimiento normativo, consulta siempre con un electricista autorizado.</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function calcularIntensidad(){
+
+let potencia=convertirNumero(document.getElementById("potencia").value);
+let unidad=document.getElementById("unidadPotencia").value;
+let voltaje=convertirNumero(document.getElementById("voltaje").value);
+let cosfi=convertirNumero(document.getElementById("cosfi").value);
+
+if(isNaN(potencia)||isNaN(voltaje)||isNaN(cosfi)||potencia<=0||voltaje<=0||cosfi<=0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos. Puedes usar coma o punto para decimales.";
+return;
+}
+
+if(unidad==="kw"){
+potencia=potencia*1000;
+}
+
+let intensidad=potencia/(voltaje*cosfi);
+
+document.getElementById("resultado").innerHTML=
+"Intensidad monofásica: "+intensidad.toFixed(2)+" A<br>"+
+"Potencia utilizada: "+potencia.toFixed(0)+" W<br>"+
+"Tensión: "+voltaje.toFixed(0)+" V<br>"+
+"Factor de potencia: "+cosfi.toFixed(2);
+}
+</script>
+
+</body>
+</html>
