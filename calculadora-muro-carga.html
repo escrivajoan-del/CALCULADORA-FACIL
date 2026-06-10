@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora de Muro de Carga | Peso y Volumen</title>
-<meta name="description" content="Calculadora de muro de carga online. Calcula volumen, peso aproximado y carga estimada según dimensiones y material del muro.">
+
+<title>Calculadora de Muro de Carga | Peso, Volumen y Carga Lineal</title>
+<meta name="description" content="Calcula el volumen, peso aproximado y carga lineal de un muro de carga según longitud, altura, espesor y material.">
+
 <style>
 body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
 header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
@@ -14,84 +16,101 @@ nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:
 .card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
 input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
 button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
-.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:20px;font-weight:bold}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:18px;font-weight:bold}
 h2{color:#0b5fff;margin-top:0}
 footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
 </style>
 </head>
+
 <body>
+
 <header>
 <h1>Calculadora de Muro de Carga</h1>
-<p>Calcula el volumen y el peso aproximado de un muro según dimensiones y material.</p>
+<p>Calcula el volumen, peso y carga lineal aproximada de un muro.</p>
 </header>
+
 <nav>
 <a href="index.html">Inicio</a>
 <a href="calculadora-carga-forjado.html">Carga Forjado</a>
 <a href="calculadora-flecha-viga.html">Flecha Viga</a>
 </nav>
+
 <div class="container">
+
 <div class="card">
 <h2>Calcula un muro de carga</h2>
 
-Longitud del muro (m)
-Altura del muro (m)
-Espesor del muro (m)
-Material
-<option value="1800">Ladrillo macizo</option>
-<option value="1600">Ladrillo hueco</option>
-<option value="2200">Hormigón</option>
-<option value="2400">Hormigón armado</option>
-<option value="600">Bloque ligero</option>
-<option value="700">Madera estructural</option>
+<label>Longitud del muro (m)</label>
+<input type="text" inputmode="decimal" id="longitud" placeholder="Ejemplo: 5">
+
+<label>Altura del muro (m)</label>
+<input type="text" inputmode="decimal" id="altura" placeholder="Ejemplo: 2,8">
+
+<label>Espesor del muro (m)</label>
+<input type="text" inputmode="decimal" id="espesor" placeholder="Ejemplo: 0,24">
+
+<label>Material del muro</label>
+<select id="material">
+<option value="1800">Ladrillo macizo - 1800 kg/m³</option>
+<option value="1600">Ladrillo hueco - 1600 kg/m³</option>
+<option value="2200">Hormigón - 2200 kg/m³</option>
+<option value="2400">Hormigón armado - 2400 kg/m³</option>
+<option value="600">Bloque ligero - 600 kg/m³</option>
+<option value="700">Madera estructural - 700 kg/m³</option>
 </select>
 
-Calcular muro
+<button type="button" onclick="calcularMuro()">Calcular muro</button>
 
 <div class="resultado" id="resultado"></div>
 </div>
-<div class="card">
-<h2>¿Qué es un muro de carga?</h2>
-<p>
-Un muro de carga es un elemento estructural que soporta el peso de forjados, cubiertas u otros elementos de la construcción y transmite las cargas hasta la cimentación.
-</p>
-</div>
+
 <div class="card">
 <h2>¿Qué calcula esta herramienta?</h2>
-<p>
-Calcula el volumen total del muro y estima su peso propio en función de la densidad típica del material seleccionado.
-</p>
+<p>Esta calculadora estima el volumen total del muro, su peso propio y la carga lineal aproximada que transmite por metro de longitud.</p>
 </div>
+
 <div class="card">
 <h2>Aviso importante</h2>
-<p>
-Esta calculadora tiene carácter orientativo. No debe utilizarse para tomar decisiones estructurales sin la supervisión de un arquitecto, arquitecto técnico o ingeniero competente.
-</p>
+<p>Esta herramienta es orientativa. No debe usarse para modificar, demoler o dimensionar muros de carga sin la revisión de un arquitecto, arquitecto técnico o ingeniero competente.</p>
 </div>
+
 </div>
+
 <footer>
 © 2026 Calculadoras de Reformas y Hogar
 </footer>
+
 <script>
 function convertirNumero(valor){
 return parseFloat(String(valor).replace(",", "."));
 }
+
 function calcularMuro(){
+
 let longitud=convertirNumero(document.getElementById("longitud").value);
 let altura=convertirNumero(document.getElementById("altura").value);
 let espesor=convertirNumero(document.getElementById("espesor").value);
 let densidad=convertirNumero(document.getElementById("material").value);
+
 if(isNaN(longitud)||isNaN(altura)||isNaN(espesor)||isNaN(densidad)||longitud<=0||altura<=0||espesor<=0){
-document.getElementById("resultado").innerHTML="Introduce valores válidos.";
+document.getElementById("resultado").innerHTML="Introduce valores válidos. Puedes usar coma o punto para decimales.";
 return;
 }
+
 let volumen=longitud*altura*espesor;
 let peso=volumen*densidad;
 let toneladas=peso/1000;
+let pesoMetro=peso/longitud;
+let cargaKNM=pesoMetro*9.81/1000;
+
 document.getElementById("resultado").innerHTML=
 "Volumen del muro: "+volumen.toFixed(2)+" m³<br>"+
-"Peso aproximado: "+peso.toFixed(0)+" kg<br>"+
-"Peso aproximado: "+toneladas.toFixed(2)+" toneladas";
+"Peso aproximado total: "+peso.toFixed(0)+" kg<br>"+
+"Peso aproximado total: "+toneladas.toFixed(2)+" toneladas<br>"+
+"Peso por metro lineal: "+pesoMetro.toFixed(0)+" kg/m<br>"+
+"Carga lineal aproximada: "+cargaKNM.toFixed(2)+" kN/m";
 }
 </script>
+
 </body>
 </html>
