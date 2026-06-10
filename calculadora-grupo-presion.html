@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Grupo de Presión de Agua | Vivienda y Edificios</title>
+<meta name="description" content="Calculadora de grupo de presión online. Estima la presión, altura manométrica y caudal recomendado para viviendas, edificios y pequeñas instalaciones.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:20px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Grupo de Presión</h1>
+<p>Calcula de forma orientativa la presión y el caudal recomendado para un grupo de presión de agua.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-caudal-agua.html">Caudal</a>
+<a href="calculadora-perdida-carga.html">Pérdida de carga</a>
+<a href="calculadora-seccion-tuberia.html">Sección tubería</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcula el grupo de presión recomendado</h2>
+
+<label>Altura hasta el punto más alto de consumo (m)</label>
+<input type="text" inputmode="decimal" id="altura" placeholder="Ejemplo: 18">
+
+<label>Presión deseada en el punto de consumo (bar)</label>
+<input type="text" inputmode="decimal" id="presion" placeholder="Ejemplo: 2,5">
+
+<label>Pérdidas estimadas por tuberías y accesorios (%)</label>
+<input type="text" inputmode="decimal" id="perdidas" value="20">
+
+<label>Número de viviendas o puntos principales</label>
+<input type="text" inputmode="decimal" id="viviendas" placeholder="Ejemplo: 6">
+
+<label>Caudal estimado por vivienda o punto (L/min)</label>
+<input type="text" inputmode="decimal" id="caudal" value="12">
+
+<button type="button" onclick="calcularGrupoPresion()">Calcular grupo de presión</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Cómo se calcula un grupo de presión?</h2>
+<p>
+Para elegir un grupo de presión se tiene en cuenta la altura que debe vencer la bomba,
+la presión mínima deseada en los puntos de consumo, las pérdidas de carga de la instalación
+y el caudal simultáneo necesario.
+</p>
+<p>
+Como referencia, 1 bar equivale aproximadamente a 10 metros de columna de agua. Por eso,
+una vivienda que necesita 2,5 bar en el punto más alto requiere alrededor de 25 metros de
+presión adicional, además de la altura real y las pérdidas.
+</p>
+</div>
+
+<div class="card">
+<h2>Resultado orientativo</h2>
+<p>
+Esta calculadora ofrece una estimación inicial de la altura manométrica total y del caudal
+recomendado. Para instalaciones profesionales, comunidades de vecinos, edificios o sistemas
+con normativa específica, el cálculo debe validarlo un técnico o instalador cualificado.
+</p>
+</div>
+
+<div class="card">
+<h2>Preguntas frecuentes</h2>
+
+<h3>¿Qué es la altura manométrica?</h3>
+<p>
+Es la presión total que debe aportar la bomba para elevar el agua, vencer pérdidas de carga
+y mantener una presión adecuada en el punto de consumo.
+</p>
+
+<h3>¿Qué presión necesita una vivienda?</h3>
+<p>
+En viviendas suele buscarse una presión aproximada entre 2 y 3 bar en los puntos de consumo,
+aunque depende del tipo de instalación y del confort deseado.
+</p>
+
+<h3>¿El resultado sirve para comunidades?</h3>
+<p>
+Sirve como orientación inicial, pero en comunidades de vecinos conviene hacer un cálculo técnico
+considerando simultaneidad, acumulación, normativa y características reales de la red.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function calcularGrupoPresion(){
+
+let altura=convertirNumero(document.getElementById("altura").value);
+let presion=convertirNumero(document.getElementById("presion").value);
+let perdidas=convertirNumero(document.getElementById("perdidas").value);
+let viviendas=convertirNumero(document.getElementById("viviendas").value);
+let caudal=convertirNumero(document.getElementById("caudal").value);
+
+if(isNaN(altura)||isNaN(presion)||isNaN(perdidas)||isNaN(viviendas)||isNaN(caudal)||altura<=0||presion<=0||perdidas<0||viviendas<=0||caudal<=0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos. Puedes usar coma o punto para decimales.";
+return;
+}
+
+let presionMetros=presion*10;
+let base=altura+presionMetros;
+let total=base+(base*perdidas/100);
+
+let simultaneidad;
+if(viviendas<=2){
+simultaneidad=1;
+}else if(viviendas<=5){
+simultaneidad=0.7;
+}else if(viviendas<=10){
+simultaneidad=0.5;
+}else if(viviendas<=20){
+simultaneidad=0.35;
+}else{
+simultaneidad=0.25;
+}
+
+let caudalTotalLmin=viviendas*caudal*simultaneidad;
+let caudalM3h=caudalTotalLmin*60/1000;
+
+let recomendacion="";
+if(caudalM3h<2){
+recomendacion="Grupo pequeño doméstico";
+}else if(caudalM3h<5){
+recomendacion="Grupo de presión para vivienda o pequeño edificio";
+}else if(caudalM3h<10){
+recomendacion="Grupo de presión de caudal medio";
+}else{
+recomendacion="Grupo de presión de alto caudal";
+}
+
+document.getElementById("resultado").innerHTML=
+"Altura manométrica estimada: "+total.toFixed(1)+" m.c.a.<br>"+
+"Presión equivalente aproximada: "+(total/10).toFixed(2)+" bar<br>"+
+"Caudal recomendado: "+caudalM3h.toFixed(2)+" m³/h<br>"+
+"Tipo orientativo: "+recomendacion;
+}
+</script>
+
+</body>
+</html>
