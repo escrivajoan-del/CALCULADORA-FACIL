@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Azulejos | Cantidad de azulejos necesarios</title>
+
+<meta name="description" content="Calculadora de azulejos online gratis. Calcula cuántos azulejos necesitas para baño, cocina, paredes o suelos con margen de desperdicio.">
+
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:45px 20px;text-align:center}
+header h1{font-size:38px;margin:0 0 10px}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px}
+.container{max-width:950px;margin:auto;padding:30px 20px}
+.card{background:white;padding:28px;border-radius:16px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:30px}
+input,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:20px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Azulejos</h1>
+<p>Calcula cuántos azulejos necesitas para paredes, baños, cocinas o suelos.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-pintura.html">Pintura</a>
+<a href="calculadora-suelo.html">Suelo</a>
+<a href="calculadora-iluminacion.html">Iluminación</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcula la cantidad de azulejos</h2>
+
+<label>Metros cuadrados a cubrir</label>
+<input type="number" id="metros" placeholder="Ejemplo: 25">
+
+<label>Ancho del azulejo en cm</label>
+<input type="number" id="ancho" placeholder="Ejemplo: 30">
+
+<label>Alto del azulejo en cm</label>
+<input type="number" id="alto" placeholder="Ejemplo: 60">
+
+<label>Margen extra por cortes y roturas (%)</label>
+<input type="number" id="margen" value="10">
+
+<button onclick="calcularAzulejos()">Calcular azulejos</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Cómo calcular cuántos azulejos necesitas?</h2>
+
+<p>
+Para calcular la cantidad de azulejos, primero debes conocer la superficie
+total que quieres cubrir en metros cuadrados.
+</p>
+
+<p>
+Después se calcula la superficie de cada azulejo multiplicando su ancho
+por su alto. Esta medida se convierte a metros cuadrados para poder comparar
+ambos valores.
+</p>
+
+<p>
+Es recomendable añadir un margen extra del 10% para cubrir cortes,
+roturas, ajustes en esquinas y futuras reparaciones.
+</p>
+</div>
+
+<div class="card">
+<h2>Preguntas frecuentes</h2>
+
+<h3>¿Cuánto margen debo comprar de más?</h3>
+<p>
+Lo habitual es añadir un 10%. En colocaciones en diagonal, diseños complejos
+o espacios con muchas esquinas puede ser mejor añadir un 15%.
+</p>
+
+<h3>¿Sirve para baños y cocinas?</h3>
+<p>
+Sí. Puedes usar esta calculadora para baños, cocinas, paredes, suelos,
+frentes de ducha o zonas alicatadas.
+</p>
+
+<h3>¿Debo comprar cajas completas?</h3>
+<p>
+Sí. Los azulejos normalmente se venden por cajas, así que el resultado debe
+redondearse según las unidades o metros cuadrados que incluya cada caja.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function calcularAzulejos(){
+let metros=parseFloat(document.getElementById("metros").value);
+let ancho=parseFloat(document.getElementById("ancho").value);
+let alto=parseFloat(document.getElementById("alto").value);
+let margen=parseFloat(document.getElementById("margen").value);
+
+if(isNaN(metros)||isNaN(ancho)||isNaN(alto)||isNaN(margen)||metros<=0||ancho<=0||alto<=0||margen<0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos.";
+return;
+}
+
+let areaAzulejo=(ancho/100)*(alto/100);
+let cantidad=metros/areaAzulejo;
+let total=cantidad+(cantidad*margen/100);
+
+document.getElementById("resultado").innerHTML=
+"Necesitas aproximadamente "+Math.ceil(total)+" azulejos, incluyendo un margen del "+margen+"%.";
+}
+</script>
+
+</body>
+</html>
