@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Iluminación | Lúmenes recomendados por estancia</title>
+
+<meta name="description" content="Calculadora de iluminación online gratis. Calcula cuántos lúmenes necesitas para iluminar salones, dormitorios, cocinas, baños y zonas de trabajo.">
+
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:45px 20px;text-align:center}
+header h1{font-size:38px;margin:0 0 10px}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px}
+.container{max-width:950px;margin:auto;padding:30px 20px}
+.card{background:white;padding:28px;border-radius:16px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:30px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:20px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+table{width:100%;border-collapse:collapse;margin-top:15px}
+td,th{border:1px solid #ddd;padding:10px;text-align:left}
+th{background:#eef4ff}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Iluminación</h1>
+<p>Calcula los lúmenes recomendados para iluminar una estancia.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-pintura.html">Pintura</a>
+<a href="calculadora-suelo.html">Suelo</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcula los lúmenes necesarios</h2>
+
+<label>Metros cuadrados de la estancia</label>
+<input type="number" id="metros" placeholder="Ejemplo: 20">
+
+<label>Tipo de estancia</label>
+<select id="tipo">
+<option value="150">Dormitorio o ambiente relajado</option>
+<option value="200">Salón o comedor</option>
+<option value="300">Baño o zona funcional</option>
+<option value="400">Cocina</option>
+<option value="500">Zona de trabajo o estudio</option>
+</select>
+
+<button onclick="calcularIluminacion()">Calcular iluminación</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Cómo calcular la iluminación de una estancia?</h2>
+
+<p>
+Para estimar la iluminación necesaria se pueden usar los lúmenes por metro
+cuadrado. Los lúmenes indican la cantidad total de luz emitida por una
+fuente luminosa.
+</p>
+
+<p>
+Una estancia decorativa o de descanso necesita menos luz que una cocina,
+un baño o una zona de trabajo. Por eso esta calculadora adapta el cálculo
+según el uso del espacio.
+</p>
+
+<p>
+El resultado es orientativo. En un proyecto real también influyen la altura
+del techo, el color de paredes y suelos, la luz natural, la distribución
+de luminarias y el tipo de ambiente que se quiera crear.
+</p>
+</div>
+
+<div class="card">
+<h2>Tabla orientativa de lúmenes por estancia</h2>
+
+<table>
+<tr>
+<th>Estancia</th>
+<th>Lúmenes recomendados por m²</th>
+</tr>
+<tr>
+<td>Dormitorio</td>
+<td>100 - 150 lm/m²</td>
+</tr>
+<tr>
+<td>Salón</td>
+<td>150 - 250 lm/m²</td>
+</tr>
+<tr>
+<td>Baño</td>
+<td>250 - 350 lm/m²</td>
+</tr>
+<tr>
+<td>Cocina</td>
+<td>300 - 500 lm/m²</td>
+</tr>
+<tr>
+<td>Zona de trabajo</td>
+<td>400 - 600 lm/m²</td>
+</tr>
+</table>
+</div>
+
+<div class="card">
+<h2>Preguntas frecuentes</h2>
+
+<h3>¿Qué son los lúmenes?</h3>
+<p>
+Los lúmenes miden la cantidad de luz visible que emite una bombilla,
+tira LED o luminaria.
+</p>
+
+<h3>¿Es mejor calcular por vatios o por lúmenes?</h3>
+<p>
+Actualmente es mejor calcular por lúmenes, porque las bombillas LED
+consumen menos vatios que las antiguas pero pueden ofrecer mucha luz.
+</p>
+
+<h3>¿Esta calculadora sirve para un proyecto profesional?</h3>
+<p>
+Sirve como estimación inicial. Para un proyecto profesional de iluminación
+conviene realizar un estudio más preciso teniendo en cuenta planos,
+temperatura de color, ángulos de apertura y distribución de puntos de luz.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function calcularIluminacion(){
+let metros=parseFloat(document.getElementById("metros").value);
+let lumensMetro=parseFloat(document.getElementById("tipo").value);
+
+if(isNaN(metros)||metros<=0){
+document.getElementById("resultado").innerHTML="Introduce metros cuadrados válidos.";
+return;
+}
+
+let total=metros*lumensMetro;
+
+document.getElementById("resultado").innerHTML=
+"Necesitas aproximadamente "+total.toFixed(0)+" lúmenes totales para esta estancia.";
+}
+</script>
+
+</body>
+</html>
