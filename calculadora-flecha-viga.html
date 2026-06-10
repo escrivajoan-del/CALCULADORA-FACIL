@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Flecha de Viga | Deformación Máxima</title>
+<meta name="description" content="Calculadora de flecha de viga online. Estima la deformación máxima de una viga simplemente apoyada según luz, material, carga e inercia.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:20px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Flecha de Viga</h1>
+<p>Calcula de forma orientativa la deformación máxima de una viga simplemente apoyada.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-carga-forjado.html">Carga forjado</a>
+<a href="calculadora-muro-carga.html">Muro carga</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcula la flecha de una viga</h2>
+
+<label>Luz de la viga (m)</label>
+<input type="text" inputmode="decimal" id="luz" placeholder="Ejemplo: 4">
+
+<label>Carga uniforme sobre la viga (kg/m)</label>
+<input type="text" inputmode="decimal" id="carga" placeholder="Ejemplo: 500">
+
+<label>Material de la viga</label>
+<select id="material">
+<option value="210000">Acero estructural</option>
+<option value="30000">Hormigón armado aproximado</option>
+<option value="11000">Madera estructural aproximada</option>
+</select>
+
+<label>Momento de inercia de la sección (cm⁴)</label>
+<input type="text" inputmode="decimal" id="inercia" placeholder="Ejemplo: 8000">
+
+<button type="button" onclick="calcularFlecha()">Calcular flecha</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Qué es la flecha de una viga?</h2>
+<p>
+La flecha es la deformación vertical que aparece en una viga cuando soporta una carga.
+Aunque una viga pueda resistir estructuralmente, una flecha excesiva puede provocar fisuras,
+vibraciones, problemas en tabiquería o sensación de inseguridad.
+</p>
+</div>
+
+<div class="card">
+<h2>Fórmula utilizada</h2>
+<p>
+Esta calculadora utiliza una fórmula simplificada para una viga simplemente apoyada con carga
+uniformemente repartida:
+</p>
+<p>
+<strong>f = 5 · q · L⁴ / (384 · E · I)</strong>
+</p>
+<p>
+El resultado es orientativo y depende de que los datos introducidos sean correctos.
+</p>
+</div>
+
+<div class="card">
+<h2>Límites orientativos</h2>
+<ul>
+<li>L/250: criterio habitual para cargas generales.</li>
+<li>L/300: criterio más exigente en algunos acabados.</li>
+<li>L/500: criterio habitual para elementos sensibles o acabados delicados.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Aviso importante</h2>
+<p>
+Esta herramienta no sustituye un cálculo estructural profesional. Para dimensionar vigas,
+reformar estructuras, abrir huecos o comprobar seguridad estructural, consulta siempre con
+un técnico competente.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function calcularFlecha(){
+let luz=convertirNumero(document.getElementById("luz").value);
+let cargaKgM=convertirNumero(document.getElementById("carga").value);
+let E=convertirNumero(document.getElementById("material").value);
+let Icm4=convertirNumero(document.getElementById("inercia").value);
+
+if(isNaN(luz)||isNaN(cargaKgM)||isNaN(E)||isNaN(Icm4)||luz<=0||cargaKgM<=0||E<=0||Icm4<=0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos. Puedes usar coma o punto para decimales.";
+return;
+}
+
+let L=luz*1000;
+let q=(cargaKgM*9.81)/1000;
+let I=Icm4*10000;
+
+let flecha=(5*q*Math.pow(L,4))/(384*E*I);
+let limite250=L/250;
+let limite300=L/300;
+let limite500=L/500;
+
+let estado="";
+
+if(flecha<=limite500){
+estado="Muy rígida según criterio L/500";
+}else if(flecha<=limite300){
+estado="Cumple aproximadamente criterio L/300";
+}else if(flecha<=limite250){
+estado="Cumple aproximadamente criterio L/250";
+}else{
+estado="Flecha elevada: revisar sección o cálculo";
+}
+
+document.getElementById("resultado").innerHTML=
+"Flecha estimada: "+flecha.toFixed(2)+" mm<br>"+
+"Límite L/250: "+limite250.toFixed(2)+" mm<br>"+
+"Límite L/300: "+limite300.toFixed(2)+" mm<br>"+
+"Límite L/500: "+limite500.toFixed(2)+" mm<br>"+
+"Resultado orientativo: "+estado;
+}
+</script>
+
+</body>
+</html>
