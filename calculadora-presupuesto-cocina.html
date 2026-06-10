@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Presupuesto de Cocina | Coste estimado online</title>
+
+<meta name="description" content="Calculadora de presupuesto de cocina online gratis. Estima el coste aproximado de reformar una cocina según metros, calidad, muebles, encimera e instalación.">
+
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:45px 20px;text-align:center}
+header h1{font-size:38px;margin:0 0 10px}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px}
+.container{max-width:950px;margin:auto;padding:30px 20px}
+.card{background:white;padding:28px;border-radius:16px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:30px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:20px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Presupuesto de Cocina</h1>
+<p>Estima el coste aproximado de reformar una cocina según tamaño y calidades.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-reforma.html">Reforma</a>
+<a href="calculadora-azulejos.html">Azulejos</a>
+<a href="calculadora-iluminacion.html">Iluminación</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcula el presupuesto aproximado de tu cocina</h2>
+
+<label>Metros cuadrados de la cocina</label>
+<input type="number" id="metros" placeholder="Ejemplo: 12">
+
+<label>Nivel de reforma</label>
+<select id="nivel">
+<option value="700">Básica</option>
+<option value="1100">Media</option>
+<option value="1600">Alta</option>
+<option value="2200">Premium</option>
+</select>
+
+<label>¿Incluye muebles de cocina?</label>
+<select id="muebles">
+<option value="0">No</option>
+<option value="2500">Sí, gama básica</option>
+<option value="5000">Sí, gama media</option>
+<option value="8500">Sí, gama alta</option>
+</select>
+
+<label>¿Incluye encimera?</label>
+<select id="encimera">
+<option value="0">No</option>
+<option value="900">Laminada o básica</option>
+<option value="1800">Porcelánica, compacta o similar</option>
+<option value="3500">Alta gama</option>
+</select>
+
+<label>Margen extra recomendado (%)</label>
+<input type="number" id="margen" value="10">
+
+<button onclick="calcularCocina()">Calcular presupuesto</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Cómo se calcula el coste de reformar una cocina?</h2>
+
+<p>
+El precio de una reforma de cocina depende del tamaño, el estado inicial,
+la calidad de los materiales, la complejidad de las instalaciones y el tipo
+de mobiliario elegido.
+</p>
+
+<p>
+Una cocina sencilla puede requerir trabajos de pintura, suelo, iluminación
+y montaje básico. Una cocina completa suele incluir demolición, fontanería,
+electricidad, revestimientos, muebles, encimera, electrodomésticos,
+iluminación y acabados.
+</p>
+
+<p>
+Esta calculadora ofrece una estimación orientativa para tener una primera
+idea del presupuesto. Para obtener un presupuesto real conviene medir la
+cocina, definir materiales y valorar el estado de las instalaciones.
+</p>
+</div>
+
+<div class="card">
+<h2>Factores que más influyen en el precio</h2>
+
+<h3>Mobiliario de cocina</h3>
+<p>
+Los muebles pueden representar una parte importante del presupuesto. La
+diferencia entre una cocina básica y una cocina a medida de alta gama puede
+ser muy elevada.
+</p>
+
+<h3>Encimera</h3>
+<p>
+La encimera también influye mucho. No cuesta lo mismo una encimera laminada
+que una porcelánica, compacta o de piedra natural.
+</p>
+
+<h3>Instalaciones</h3>
+<p>
+Si hay que modificar electricidad, fontanería, tomas, iluminación o
+distribución, el coste puede aumentar.
+</p>
+
+<h3>Revestimientos y suelo</h3>
+<p>
+Azulejos, pavimentos, pintura, alicatados y remates también deben tenerse
+en cuenta en el presupuesto final.
+</p>
+</div>
+
+<div class="card">
+<h2>Preguntas frecuentes</h2>
+
+<h3>¿Cuánto cuesta reformar una cocina?</h3>
+<p>
+El coste puede variar mucho según metros cuadrados, materiales, muebles,
+encimera e instalaciones. Esta calculadora ofrece una primera orientación.
+</p>
+
+<h3>¿El resultado es un presupuesto cerrado?</h3>
+<p>
+No. Es una estimación aproximada. Para un precio real es necesario tomar
+medidas, definir calidades y revisar el estado de la cocina.
+</p>
+
+<h3>¿Incluye electrodomésticos?</h3>
+<p>
+No se incluyen de forma específica. Puedes añadirlos al presupuesto final
+según la gama que quieras instalar.
+</p>
+
+<h3>¿Conviene añadir margen extra?</h3>
+<p>
+Sí. En reformas es recomendable añadir un margen para imprevistos,
+remates, pequeños cambios o ajustes durante la obra.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function calcularCocina(){
+let metros=parseFloat(document.getElementById("metros").value);
+let nivel=parseFloat(document.getElementById("nivel").value);
+let muebles=parseFloat(document.getElementById("muebles").value);
+let encimera=parseFloat(document.getElementById("encimera").value);
+let margen=parseFloat(document.getElementById("margen").value);
+
+if(isNaN(metros)||isNaN(nivel)||isNaN(muebles)||isNaN(encimera)||isNaN(margen)||metros<=0||margen<0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos.";
+return;
+}
+
+let base=metros*nivel;
+let subtotal=base+muebles+encimera;
+let total=subtotal+(subtotal*margen/100);
+
+document.getElementById("resultado").innerHTML=
+"Presupuesto base aproximado: "+subtotal.toFixed(0)+" €<br>Total recomendado con margen: "+total.toFixed(0)+" €";
+}
+</script>
+
+</body>
+</html>
