@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Hormigón Online | Metros cúbicos y sacos</title>
+<meta name="description" content="Calculadora de hormigón online gratis. Calcula metros cúbicos de hormigón y sacos aproximados para soleras, bases, losas y pequeñas obras.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:20px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Hormigón</h1>
+<p>Calcula los metros cúbicos de hormigón necesarios para una solera, losa o base.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-cemento.html">Cemento</a>
+<a href="calculadora-ladrillos.html">Ladrillos</a>
+<a href="calculadora-reforma.html">Reforma</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcula el hormigón necesario</h2>
+
+<label>Largo en metros</label>
+<input type="number" id="largo" placeholder="Ejemplo: 5">
+
+<label>Ancho en metros</label>
+<input type="number" id="ancho" placeholder="Ejemplo: 4">
+
+<label>Espesor en centímetros</label>
+<input type="number" id="espesor" placeholder="Ejemplo: 10">
+
+<label>Margen extra recomendado (%)</label>
+<input type="number" id="margen" value="10">
+
+<button onclick="calcularHormigon()">Calcular hormigón</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Cómo calcular hormigón?</h2>
+<p>
+Para calcular el hormigón necesario se multiplica el largo por el ancho y por
+el espesor convertido a metros. El resultado se expresa en metros cúbicos.
+</p>
+<p>
+Por ejemplo, una base de 5 m por 4 m con 10 cm de espesor tiene un volumen de:
+5 × 4 × 0,10 = 2 m³ de hormigón.
+</p>
+<p>
+Es recomendable añadir un margen extra para pérdidas, nivelaciones, irregularidades
+del terreno o pequeñas variaciones durante la ejecución.
+</p>
+</div>
+
+<div class="card">
+<h2>Preguntas frecuentes</h2>
+
+<h3>¿Cuánto hormigón necesito para una solera?</h3>
+<p>
+Depende de la superficie y el espesor. Para una solera ligera se suelen usar espesores
+de 8 a 10 cm, aunque puede variar según el uso y la carga prevista.
+</p>
+
+<h3>¿Esta calculadora sirve para losas y bases?</h3>
+<p>
+Sí. Puede utilizarse como orientación para soleras, bases, losas pequeñas, terrazas,
+caminos o zonas exteriores.
+</p>
+
+<h3>¿El resultado es exacto?</h3>
+<p>
+No. Es una estimación orientativa. Para trabajos estructurales o con cargas importantes
+conviene consultar con un técnico o profesional cualificado.
+</p>
+
+<h3>¿Cuántos sacos de hormigón preparado necesito?</h3>
+<p>
+Depende del rendimiento del producto. Como referencia orientativa, un saco de 25 kg
+de hormigón preparado puede rendir alrededor de 0,012 m³, aunque siempre conviene
+comprobar la ficha del fabricante.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function calcularHormigon(){
+let largo=parseFloat(document.getElementById("largo").value);
+let ancho=parseFloat(document.getElementById("ancho").value);
+let espesor=parseFloat(document.getElementById("espesor").value);
+let margen=parseFloat(document.getElementById("margen").value);
+
+if(isNaN(largo)||isNaN(ancho)||isNaN(espesor)||isNaN(margen)||largo<=0||ancho<=0||espesor<=0||margen<0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos.";
+return;
+}
+
+let volumen=largo*ancho*(espesor/100);
+let total=volumen+(volumen*margen/100);
+let sacos=Math.ceil(total/0.012);
+
+document.getElementById("resultado").innerHTML=
+"Volumen base: "+volumen.toFixed(2)+" m³<br>Total recomendado con margen: "+total.toFixed(2)+" m³<br>Sacos aproximados de 25 kg: "+sacos;
+}
+</script>
+
+</body>
+</html>
