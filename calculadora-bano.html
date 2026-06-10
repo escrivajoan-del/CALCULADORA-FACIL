@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Reforma de Baño | Presupuesto online</title>
+
+<meta name="description" content="Calculadora de reforma de baño online gratis. Estima cuánto cuesta reformar un baño según metros cuadrados, calidades, sanitarios, azulejos y margen.">
+
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:45px 20px;text-align:center}
+header h1{font-size:38px;margin:0 0 10px}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px}
+.container{max-width:950px;margin:auto;padding:30px 20px}
+.card{background:white;padding:28px;border-radius:16px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:30px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:20px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Reforma de Baño</h1>
+<p>Estima el presupuesto aproximado para reformar un baño.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-reforma.html">Reforma</a>
+<a href="calculadora-azulejos.html">Azulejos</a>
+<a href="calculadora-pintura.html">Pintura</a>
+<a href="calculadora-presupuesto-cocina.html">Cocina</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcula el presupuesto de tu baño</h2>
+
+<label>Metros cuadrados del baño</label>
+<input type="number" id="metros" placeholder="Ejemplo: 5">
+
+<label>Nivel de reforma</label>
+<select id="nivel">
+<option value="900">Básica</option>
+<option value="1400">Media</option>
+<option value="2000">Alta</option>
+<option value="2800">Premium</option>
+</select>
+
+<label>¿Incluye cambio de sanitarios?</label>
+<select id="sanitarios">
+<option value="0">No</option>
+<option value="900">Sí, gama básica</option>
+<option value="1800">Sí, gama media</option>
+<option value="3200">Sí, gama alta</option>
+</select>
+
+<label>¿Incluye mueble de baño y mampara?</label>
+<select id="mueble">
+<option value="0">No</option>
+<option value="700">Sí, básico</option>
+<option value="1500">Sí, gama media</option>
+<option value="2800">Sí, gama alta</option>
+</select>
+
+<label>Margen extra recomendado (%)</label>
+<input type="number" id="margen" value="10">
+
+<button onclick="calcularBano()">Calcular presupuesto</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Cuánto cuesta reformar un baño?</h2>
+
+<p>
+El precio de reformar un baño depende del tamaño, el estado inicial, la calidad
+de los materiales, los sanitarios, la grifería, la mampara, el mobiliario y las
+instalaciones de fontanería y electricidad.
+</p>
+
+<p>
+Una reforma sencilla puede incluir sustitución de revestimientos, pintura,
+sanitarios básicos y pequeños ajustes. Una reforma completa puede incluir
+demolición, fontanería, electricidad, impermeabilización, plato de ducha,
+mampara, mueble, iluminación y acabados de mayor calidad.
+</p>
+
+<p>
+Esta calculadora ofrece una estimación orientativa para conocer un rango de
+precio inicial. Para un presupuesto real es necesario medir el baño, revisar
+instalaciones y definir materiales.
+</p>
+</div>
+
+<div class="card">
+<h2>Factores que influyen en el presupuesto</h2>
+
+<h3>Metros cuadrados</h3>
+<p>
+A mayor superficie, mayor cantidad de azulejos, suelo, mano de obra y materiales.
+</p>
+
+<h3>Calidad de sanitarios y grifería</h3>
+<p>
+El coste puede variar mucho según se elijan piezas básicas, gama media o marcas
+de alta gama.
+</p>
+
+<h3>Instalaciones</h3>
+<p>
+Si hay que cambiar fontanería, desagües, electricidad o distribución, el precio
+puede aumentar notablemente.
+</p>
+
+<h3>Acabados</h3>
+<p>
+La elección de revestimientos, iluminación, mampara, espejo y mueble de baño
+puede cambiar mucho el presupuesto final.
+</p>
+</div>
+
+<div class="card">
+<h2>Preguntas frecuentes</h2>
+
+<h3>¿El resultado es un presupuesto cerrado?</h3>
+<p>
+No. Es una estimación orientativa. Para un precio cerrado hace falta visitar
+la vivienda, tomar medidas y definir calidades.
+</p>
+
+<h3>¿Incluye azulejos y suelo?</h3>
+<p>
+Sí, el cálculo por nivel de reforma contempla una estimación general de
+revestimientos y mano de obra, aunque puede variar según el material.
+</p>
+
+<h3>¿Conviene añadir margen para imprevistos?</h3>
+<p>
+Sí. En reformas de baño es recomendable añadir un margen porque pueden aparecer
+problemas de humedad, instalaciones antiguas o ajustes no previstos.
+</p>
+
+<h3>¿Sirve para cambiar bañera por ducha?</h3>
+<p>
+Puede servir como orientación inicial, aunque el cambio de bañera por ducha
+puede requerir un cálculo específico según medidas, plato, mampara y alicatado.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function calcularBano(){
+let metros=parseFloat(document.getElementById("metros").value);
+let nivel=parseFloat(document.getElementById("nivel").value);
+let sanitarios=parseFloat(document.getElementById("sanitarios").value);
+let mueble=parseFloat(document.getElementById("mueble").value);
+let margen=parseFloat(document.getElementById("margen").value);
+
+if(isNaN(metros)||isNaN(nivel)||isNaN(sanitarios)||isNaN(mueble)||isNaN(margen)||metros<=0||margen<0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos.";
+return;
+}
+
+let base=metros*nivel;
+let subtotal=base+sanitarios+mueble;
+let total=subtotal+(subtotal*margen/100);
+
+document.getElementById("resultado").innerHTML=
+"Presupuesto base aproximado: "+subtotal.toFixed(0)+" €<br>Total recomendado con margen: "+total.toFixed(0)+" €";
+}
+</script>
+
+</body>
+</html>
