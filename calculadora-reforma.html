@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Reforma | Presupuesto orientativo online</title>
+
+<meta name="description" content="Calculadora de reforma online gratis. Estima el presupuesto aproximado de una reforma de vivienda, cocina, baño o reforma integral por metros cuadrados.">
+
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:45px 20px;text-align:center}
+header h1{font-size:38px;margin:0 0 10px}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px}
+.container{max-width:950px;margin:auto;padding:30px 20px}
+.card{background:white;padding:28px;border-radius:16px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:30px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:20px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Reforma</h1>
+<p>Estima el presupuesto orientativo de una reforma de vivienda.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-pintura.html">Pintura</a>
+<a href="calculadora-suelo.html">Suelo</a>
+<a href="calculadora-iluminacion.html">Iluminación</a>
+<a href="calculadora-azulejos.html">Azulejos</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcula el coste aproximado de tu reforma</h2>
+
+<label>Metros cuadrados de la vivienda o zona a reformar</label>
+<input type="number" id="metros" placeholder="Ejemplo: 80">
+
+<label>Tipo de reforma</label>
+<select id="tipo">
+<option value="350">Reforma básica</option>
+<option value="650">Reforma media</option>
+<option value="950">Reforma integral</option>
+<option value="1200">Reforma premium</option>
+</select>
+
+<label>Margen extra recomendado (%)</label>
+<input type="number" id="margen" value="10">
+
+<button onclick="calcularReforma()">Calcular presupuesto</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Cómo se calcula el presupuesto de una reforma?</h2>
+
+<p>
+El precio de una reforma suele estimarse en función de los metros cuadrados
+y del nivel de intervención. No cuesta lo mismo una reforma básica de acabados
+que una reforma integral con cambios de instalaciones, carpintería, cocina,
+baños, iluminación y mobiliario.
+</p>
+
+<p>
+Esta calculadora utiliza un precio orientativo por metro cuadrado según el
+tipo de reforma seleccionado. El resultado sirve como primera estimación para
+entender el rango económico del proyecto.
+</p>
+
+<p>
+En una reforma real también influyen factores como el estado inicial de la
+vivienda, la calidad de los materiales, la complejidad de la obra, la ubicación,
+los permisos, los gremios necesarios y los imprevistos.
+</p>
+</div>
+
+<div class="card">
+<h2>Tipos de reforma orientativos</h2>
+
+<h3>Reforma básica</h3>
+<p>
+Incluye actuaciones sencillas como pintura, pequeños arreglos, cambio de suelo
+o mejoras decorativas sin modificar instalaciones importantes.
+</p>
+
+<h3>Reforma media</h3>
+<p>
+Puede incluir renovación de baño o cocina, cambio de pavimentos, iluminación,
+pintura, carpintería básica y algunos trabajos de albañilería.
+</p>
+
+<h3>Reforma integral</h3>
+<p>
+Suele incluir renovación completa de vivienda, instalaciones, distribución,
+revestimientos, cocina, baños, iluminación y acabados.
+</p>
+
+<h3>Reforma premium</h3>
+<p>
+Incluye materiales de gama alta, diseño personalizado, soluciones a medida,
+mobiliario, iluminación técnica y acabados superiores.
+</p>
+</div>
+
+<div class="card">
+<h2>Preguntas frecuentes</h2>
+
+<h3>¿El resultado es un presupuesto cerrado?</h3>
+<p>
+No. Es una estimación orientativa. Para obtener un presupuesto real es necesario
+visitar la vivienda, medir correctamente y definir calidades.
+</p>
+
+<h3>¿Cuánto puede variar el precio final?</h3>
+<p>
+Puede variar bastante según materiales, estado de la vivienda, mano de obra,
+ubicación y complejidad técnica. Por eso se recomienda añadir un margen extra.
+</p>
+
+<h3>¿Sirve para calcular una reforma de baño o cocina?</h3>
+<p>
+Puede servir como referencia inicial, aunque baños y cocinas suelen requerir
+un cálculo más específico por instalaciones, revestimientos, sanitarios,
+mobiliario y electrodomésticos.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function calcularReforma(){
+let metros=parseFloat(document.getElementById("metros").value);
+let precio=parseFloat(document.getElementById("tipo").value);
+let margen=parseFloat(document.getElementById("margen").value);
+
+if(isNaN(metros)||isNaN(precio)||isNaN(margen)||metros<=0||precio<=0||margen<0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos.";
+return;
+}
+
+let base=metros*precio;
+let total=base+(base*margen/100);
+
+document.getElementById("resultado").innerHTML=
+"Presupuesto base aproximado: "+base.toFixed(0)+" €<br>Total recomendado con margen: "+total.toFixed(0)+" €";
+}
+</script>
+
+</body>
+</html>
