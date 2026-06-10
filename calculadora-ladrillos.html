@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Ladrillos Online | Cuántos ladrillos necesito</title>
+<meta name="description" content="Calculadora de ladrillos online gratis. Calcula cuántos ladrillos necesitas para construir una pared según largo, alto, tamaño del ladrillo y margen.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:20px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Ladrillos</h1>
+<p>Calcula cuántos ladrillos necesitas para levantar una pared.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-reforma.html">Reforma</a>
+<a href="calculadora-cemento.html">Cemento</a>
+<a href="calculadora-pladur.html">Pladur</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcula la cantidad de ladrillos</h2>
+
+<label>Largo de la pared en metros</label>
+<input type="number" id="largo" placeholder="Ejemplo: 4">
+
+<label>Alto de la pared en metros</label>
+<input type="number" id="alto" placeholder="Ejemplo: 2.5">
+
+<label>Largo del ladrillo en cm</label>
+<input type="number" id="largoLadrillo" value="24">
+
+<label>Alto del ladrillo en cm</label>
+<input type="number" id="altoLadrillo" value="11">
+
+<label>Margen extra por cortes y roturas (%)</label>
+<input type="number" id="margen" value="10">
+
+<button onclick="calcularLadrillos()">Calcular ladrillos</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Cómo calcular cuántos ladrillos necesito?</h2>
+<p>
+Para calcular los ladrillos necesarios se calcula primero la superficie de la pared
+multiplicando el largo por el alto. Después se calcula la superficie visible de cada
+ladrillo y se divide la superficie total entre la superficie de una pieza.
+</p>
+<p>
+Es recomendable añadir un margen extra del 10% para cubrir cortes, roturas, ajustes
+en esquinas y posibles desperdicios durante la obra.
+</p>
+</div>
+
+<div class="card">
+<h2>Preguntas frecuentes</h2>
+
+<h3>¿Cuántos ladrillos entran en un metro cuadrado?</h3>
+<p>
+Depende del tamaño del ladrillo y del espesor de la junta. Esta calculadora permite
+introducir las medidas para obtener una estimación más ajustada.
+</p>
+
+<h3>¿Incluye mortero?</h3>
+<p>
+No. Esta calculadora estima solo la cantidad de ladrillos. Para mortero, cemento o arena
+conviene hacer un cálculo aparte.
+</p>
+
+<h3>¿Sirve para tabiques interiores?</h3>
+<p>
+Sí. Puede usarse como referencia para paredes, tabiques, cerramientos o pequeñas obras.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function calcularLadrillos(){
+let largo=parseFloat(document.getElementById("largo").value);
+let alto=parseFloat(document.getElementById("alto").value);
+let largoLadrillo=parseFloat(document.getElementById("largoLadrillo").value);
+let altoLadrillo=parseFloat(document.getElementById("altoLadrillo").value);
+let margen=parseFloat(document.getElementById("margen").value);
+
+if(isNaN(largo)||isNaN(alto)||isNaN(largoLadrillo)||isNaN(altoLadrillo)||isNaN(margen)||largo<=0||alto<=0||largoLadrillo<=0||altoLadrillo<=0||margen<0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos.";
+return;
+}
+
+let areaPared=largo*alto;
+let areaLadrillo=(largoLadrillo/100)*(altoLadrillo/100);
+let cantidad=areaPared/areaLadrillo;
+let total=Math.ceil(cantidad+(cantidad*margen/100));
+
+document.getElementById("resultado").innerHTML=
+"Superficie de pared: "+areaPared.toFixed(2)+" m²<br>Necesitas aproximadamente "+total+" ladrillos.";
+}
+</script>
+
+</body>
+</html>
