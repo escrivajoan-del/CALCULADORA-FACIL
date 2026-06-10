@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Caída de Tensión Trifásica | Sección de Cable</title>
+<meta name="description" content="Calculadora de caída de tensión trifásica online. Calcula caída de tensión en voltios y porcentaje según potencia, longitud, sección, tensión y material del conductor.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:20px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Caída de Tensión Trifásica</h1>
+<p>Calcula la caída de tensión en instalaciones trifásicas según potencia, longitud y sección del cable.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-intensidad-trifasica.html">Intensidad Trifásica</a>
+<a href="calculadora-caida-tension-monofasica.html">Caída Monofásica</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcular caída de tensión trifásica</h2>
+
+<label>Potencia eléctrica</label>
+<input type="text" inputmode="decimal" id="potencia" placeholder="Ejemplo: 15000">
+
+<label>Unidad de potencia</label>
+<select id="unidadPotencia">
+<option value="w">W</option>
+<option value="kw">kW</option>
+</select>
+
+<label>Tensión trifásica entre fases (V)</label>
+<input type="text" inputmode="decimal" id="voltaje" value="400">
+
+<label>Longitud del cable ida (m)</label>
+<input type="text" inputmode="decimal" id="longitud" placeholder="Ejemplo: 40">
+
+<label>Sección del conductor (mm²)</label>
+<input type="text" inputmode="decimal" id="seccion" placeholder="Ejemplo: 6">
+
+<label>Material del conductor</label>
+<select id="material">
+<option value="56">Cobre - K 56</option>
+<option value="35">Aluminio - K 35</option>
+</select>
+
+<label>Factor de potencia cos φ</label>
+<input type="text" inputmode="decimal" id="cosfi" value="0.95">
+
+<button type="button" onclick="calcularCaida()">Calcular caída de tensión</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>Fórmula de caída de tensión trifásica</h2>
+<p>La caída de tensión aproximada en corriente alterna trifásica puede calcularse con:</p>
+<p><strong>ΔV = (√3 × L × I) / (K × S)</strong></p>
+<p>Donde L es la longitud en metros, I la intensidad en amperios, K la conductividad y S la sección del conductor.</p>
+</div>
+
+<div class="card">
+<h2>¿Por qué es importante la caída de tensión?</h2>
+<p>Una caída de tensión elevada puede provocar calentamientos, pérdidas de potencia, mal funcionamiento de motores, disparos de protecciones o bajo rendimiento de equipos eléctricos.</p>
+</div>
+
+<div class="card">
+<h2>Aviso importante</h2>
+<p>Esta calculadora es orientativa. Para dimensionar cableado, protecciones o instalaciones trifásicas reales, consulta siempre con un electricista autorizado y aplica la normativa vigente.</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function calcularCaida(){
+
+let potencia=convertirNumero(document.getElementById("potencia").value);
+let unidad=document.getElementById("unidadPotencia").value;
+let voltaje=convertirNumero(document.getElementById("voltaje").value);
+let longitud=convertirNumero(document.getElementById("longitud").value);
+let seccion=convertirNumero(document.getElementById("seccion").value);
+let k=convertirNumero(document.getElementById("material").value);
+let cosfi=convertirNumero(document.getElementById("cosfi").value);
+
+if(isNaN(potencia)||isNaN(voltaje)||isNaN(longitud)||isNaN(seccion)||isNaN(k)||isNaN(cosfi)||potencia<=0||voltaje<=0||longitud<=0||seccion<=0||k<=0||cosfi<=0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos. Puedes usar coma o punto para decimales.";
+return;
+}
+
+if(unidad==="kw"){
+potencia=potencia*1000;
+}
+
+let intensidad=potencia/(1.732*voltaje*cosfi);
+let caida=(1.732*longitud*intensidad)/(k*seccion);
+let porcentaje=(caida/voltaje)*100;
+
+let estado="";
+if(porcentaje<=3){
+estado="Caída baja";
+}else if(porcentaje<=5){
+estado="Caída moderada";
+}else{
+estado="Caída elevada: revisar sección o longitud";
+}
+
+document.getElementById("resultado").innerHTML=
+"Intensidad estimada: "+intensidad.toFixed(2)+" A<br>"+
+"Caída de tensión: "+caida.toFixed(2)+" V<br>"+
+"Caída de tensión: "+porcentaje.toFixed(2)+" %<br>"+
+"Resultado orientativo: "+estado;
+}
+</script>
+
+</body>
+</html>
