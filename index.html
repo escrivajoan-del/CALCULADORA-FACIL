@@ -1,10 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculadora Fácil</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;padding:20px;color:#222}
+.container{max-width:850px;margin:auto;background:white;padding:25px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+h1{color:#0b5fff}
+input,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:8px;border:1px solid #ccc}
+button{background:#0b5fff;color:white;border:none;font-weight:bold}
+.resultado{margin-top:15px;padding:15px;background:#eef4ff;border-radius:10px;font-size:20px;font-weight:bold}
+hr{margin:35px 0}
+</style>
 </head>
 <body>
-<h1>¡Mi web ya funciona!</h1>
-<p>Primer proyecto creado con GitHub Pages.</p>
+
+<div class="container">
+<h1>Calculadora Fácil</h1>
+<p>Calculadoras online gratis para IVA, porcentajes y descuentos.</p>
+
+<h2>Calculadora de IVA</h2>
+<input type="number" id="precio" placeholder="Introduce importe">
+<button onclick="calcularIVA()">Calcular IVA 21%</button>
+<div class="resultado" id="ivaResultado"></div>
+
+<hr>
+
+<h2>Calculadora de porcentaje</h2>
+<input type="number" id="cantidad" placeholder="Cantidad">
+<input type="number" id="porcentaje" placeholder="Porcentaje">
+<button onclick="calcularPorcentaje()">Calcular porcentaje</button>
+<div class="resultado" id="porcentajeResultado"></div>
+
+<hr>
+
+<h2>Calculadora de descuento</h2>
+<input type="number" id="precioDescuento" placeholder="Precio original">
+<input type="number" id="descuento" placeholder="Descuento %">
+<button onclick="calcularDescuento()">Calcular descuento</button>
+<div class="resultado" id="descuentoResultado"></div>
+
+<hr>
+
+<h2>Sobre esta web</h2>
+<p>Calculadora Fácil ofrece herramientas rápidas y gratuitas para resolver cálculos cotidianos. Próximamente añadiremos calculadora de IMC, edad, hipoteca, pintura, iluminación y sueldo neto.</p>
+</div>
+
+<script>
+function calcularIVA(){
+let precio=parseFloat(document.getElementById("precio").value);
+if(isNaN(precio)){document.getElementById("ivaResultado").innerHTML="Introduce un importe válido";return;}
+let iva=precio*0.21;
+let total=precio+iva;
+document.getElementById("ivaResultado").innerHTML="IVA: "+iva.toFixed(2)+" €<br>Total: "+total.toFixed(2)+" €";
+}
+
+function calcularPorcentaje(){
+let cantidad=parseFloat(document.getElementById("cantidad").value);
+let porcentaje=parseFloat(document.getElementById("porcentaje").value);
+if(isNaN(cantidad)||isNaN(porcentaje)){document.getElementById("porcentajeResultado").innerHTML="Introduce valores válidos";return;}
+let resultado=cantidad*porcentaje/100;
+document.getElementById("porcentajeResultado").innerHTML=porcentaje+"% de "+cantidad+" = "+resultado.toFixed(2);
+}
+
+function calcularDescuento(){
+let precio=parseFloat(document.getElementById("precioDescuento").value);
+let descuento=parseFloat(document.getElementById("descuento").value);
+if(isNaN(precio)||isNaN(descuento)){document.getElementById("descuentoResultado").innerHTML="Introduce valores válidos";return;}
+let ahorro=precio*descuento/100;
+let final=precio-ahorro;
+document.getElementById("descuentoResultado").innerHTML="Ahorras: "+ahorro.toFixed(2)+" €<br>Precio final: "+final.toFixed(2)+" €";
+}
+</script>
+
 </body>
 </html>
