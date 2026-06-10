@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Cemento Online | Sacos necesarios</title>
+
+<meta name="description" content="Calculadora de cemento online gratis. Calcula cuántos sacos de cemento necesitas para una solera, base o pequeña obra.">
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f4f6f8;
+margin:0;
+padding:0;
+color:#222;
+}
+
+header{
+background:#0b5fff;
+color:white;
+padding:40px;
+text-align:center;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 2px 10px rgba(0,0,0,.1);
+margin-top:20px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+margin-bottom:15px;
+font-size:16px;
+}
+
+button{
+background:#0b5fff;
+color:white;
+border:none;
+padding:12px 20px;
+font-size:16px;
+border-radius:8px;
+cursor:pointer;
+}
+
+#resultado{
+margin-top:20px;
+font-size:22px;
+font-weight:bold;
+color:#0b5fff;
+}
+
+footer{
+text-align:center;
+padding:30px;
+margin-top:40px;
+background:#111827;
+color:white;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Cemento</h1>
+<p>Calcula cuántos sacos de cemento necesitas para tu obra.</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<label>Metros cuadrados</label>
+<input type="number" id="metros" placeholder="Ejemplo: 20">
+
+<label>Espesor en centímetros</label>
+<input type="number" id="espesor" placeholder="Ejemplo: 10">
+
+<button onclick="calcularCemento()">Calcular</button>
+
+<div id="resultado"></div>
+
+</div>
+
+<div class="card">
+
+<h2>¿Cómo calcular cemento?</h2>
+
+<p>
+Esta calculadora realiza una estimación orientativa para pequeñas obras,
+soleras y bases de hormigón utilizando sacos estándar de 25 kg.
+</p>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function calcularCemento(){
+
+let metros=parseFloat(document.getElementById("metros").value);
+let espesor=parseFloat(document.getElementById("espesor").value);
+
+if(isNaN(metros)||isNaN(espesor)){
+document.getElementById("resultado").innerHTML="Introduce valores válidos";
+return;
+}
+
+let volumen=metros*(espesor/100);
+let sacos=Math.ceil(volumen*12);
+
+document.getElementById("resultado").innerHTML=
+"Necesitas aproximadamente "+sacos+" sacos de cemento de 25 kg";
+
+}
+</script>
+
+</body>
+</html>
