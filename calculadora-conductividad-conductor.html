@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Conductividad del Conductor | Cobre y Aluminio</title>
+<meta name="description" content="Calculadora de conductividad eléctrica del conductor. Calcula K, resistividad y resistencia según longitud, sección y resistencia medida del cable.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:20px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Conductividad del Conductor</h1>
+<p>Calcula la conductividad eléctrica K y la resistividad aproximada de un conductor.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-resistencia-conductor.html">Resistencia Conductor</a>
+<a href="calculadora-caida-tension-monofasica.html">Caída Monofásica</a>
+<a href="calculadora-caida-tension-trifasica.html">Caída Trifásica</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcular conductividad del conductor</h2>
+
+<label>Longitud del conductor (m)</label>
+<input type="text" inputmode="decimal" id="longitud" placeholder="Ejemplo: 50">
+
+<label>Sección del conductor (mm²)</label>
+<input type="text" inputmode="decimal" id="seccion" placeholder="Ejemplo: 6">
+
+<label>Resistencia medida del conductor (Ω)</label>
+<input type="text" inputmode="decimal" id="resistencia" placeholder="Ejemplo: 0,15">
+
+<button type="button" onclick="calcularConductividad()">Calcular conductividad</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Qué es la conductividad eléctrica?</h2>
+<p>
+La conductividad eléctrica indica la capacidad de un material para conducir corriente.
+En cálculos eléctricos prácticos suele utilizarse la constante K del conductor.
+</p>
+<p>
+Valores habituales orientativos:
+</p>
+<ul>
+<li>Cobre: K ≈ 56</li>
+<li>Aluminio: K ≈ 35</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Fórmula utilizada</h2>
+<p>
+La resistencia de un conductor puede expresarse como:
+</p>
+<p><strong>R = L / (K × S)</strong></p>
+<p>
+Despejando:
+</p>
+<p><strong>K = L / (R × S)</strong></p>
+</div>
+
+<div class="card">
+<h2>Aplicaciones</h2>
+<ul>
+<li>Comprobar valores de resistencia de un cable.</li>
+<li>Comparar cobre y aluminio.</li>
+<li>Calcular pérdidas y caída de tensión.</li>
+<li>Entender el comportamiento eléctrico de los conductores.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Aviso importante</h2>
+<p>
+Esta herramienta es orientativa. La conductividad real puede variar según temperatura,
+material, estado del cable, conexiones y condiciones de medida.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function calcularConductividad(){
+
+let longitud=convertirNumero(document.getElementById("longitud").value);
+let seccion=convertirNumero(document.getElementById("seccion").value);
+let resistencia=convertirNumero(document.getElementById("resistencia").value);
+
+if(isNaN(longitud)||isNaN(seccion)||isNaN(resistencia)||longitud<=0||seccion<=0||resistencia<=0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos. Puedes usar coma o punto para decimales.";
+return;
+}
+
+let k=longitud/(resistencia*seccion);
+let resistividad=1/k;
+
+let material="";
+if(k>=50&&k<=62){
+material="Valor cercano al cobre";
+}else if(k>=30&&k<=40){
+material="Valor cercano al aluminio";
+}else{
+material="Valor fuera de rangos habituales: revisar datos o medición";
+}
+
+document.getElementById("resultado").innerHTML=
+"Conductividad aproximada K: "+k.toFixed(2)+"<br>"+
+"Resistividad aproximada: "+resistividad.toFixed(5)+" Ω·mm²/m<br>"+
+"Interpretación: "+material;
+}
+</script>
+
+</body>
+</html>
