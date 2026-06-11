@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Papel Pintado | Cuántos Rollos Necesito</title>
+<meta name="description" content="Calculadora de papel pintado online gratis. Calcula cuántos rollos de papel pintado necesitas según medidas de la pared, rollo y desperdicio.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:19px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Papel Pintado</h1>
+<p>Calcula cuántos rollos de papel pintado necesitas para una o varias paredes.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-pintura.html">Pintura</a>
+<a href="calculadora-azulejos.html">Azulejos</a>
+<a href="calculadora-suelo.html">Suelo</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcular rollos de papel pintado</h2>
+
+<label>Ancho total de pared o paredes (m)</label>
+<input type="text" inputmode="decimal" id="anchoPared" placeholder="Ejemplo: 6">
+
+<label>Alto de pared (m)</label>
+<input type="text" inputmode="decimal" id="altoPared" placeholder="Ejemplo: 2,6">
+
+<label>Ancho del rollo de papel (m)</label>
+<input type="text" inputmode="decimal" id="anchoRollo" value="0,53">
+
+<label>Largo del rollo de papel (m)</label>
+<input type="text" inputmode="decimal" id="largoRollo" value="10">
+
+<label>Desperdicio o margen (%)</label>
+<select id="desperdicio">
+<option value="5">5% - Pared sencilla</option>
+<option value="10" selected>10% - Recomendado</option>
+<option value="15">15% - Con puertas, ventanas o ajustes</option>
+<option value="20">20% - Dibujo con rapport o patrón</option>
+</select>
+
+<button type="button" onclick="calcularPapel()">Calcular rollos</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Cómo calcular papel pintado?</h2>
+<p>
+Para calcular la cantidad de papel pintado se debe medir el ancho total de las paredes y la altura.
+Después se compara la superficie necesaria con la superficie útil de cada rollo.
+</p>
+<p>
+También conviene añadir un margen de desperdicio, especialmente si el papel tiene dibujo,
+patrón repetido, puertas, ventanas o esquinas.
+</p>
+</div>
+
+<div class="card">
+<h2>Medidas habituales de un rollo</h2>
+<p>
+Una medida muy habitual de rollo de papel pintado es aproximadamente 0,53 m de ancho por 10 m de largo.
+Aun así, siempre conviene revisar la ficha del fabricante antes de comprar.
+</p>
+</div>
+
+<div class="card">
+<h2>Consejos antes de comprar</h2>
+<ul>
+<li>Compra todos los rollos del mismo lote para evitar diferencias de tono.</li>
+<li>Añade margen si el papel tiene dibujo repetido.</li>
+<li>Revisa puertas, ventanas y esquinas antes de cortar.</li>
+<li>Guarda un sobrante para futuras reparaciones.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Aviso importante</h2>
+<p>
+Esta calculadora es orientativa. La cantidad final puede variar según el patrón del papel,
+el tipo de colocación, recortes, desperdicio y medidas reales del rollo.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function calcularPapel(){
+
+let anchoPared=convertirNumero(document.getElementById("anchoPared").value);
+let altoPared=convertirNumero(document.getElementById("altoPared").value);
+let anchoRollo=convertirNumero(document.getElementById("anchoRollo").value);
+let largoRollo=convertirNumero(document.getElementById("largoRollo").value);
+let desperdicio=convertirNumero(document.getElementById("desperdicio").value);
+
+if(isNaN(anchoPared)||isNaN(altoPared)||isNaN(anchoRollo)||isNaN(largoRollo)||isNaN(desperdicio)||anchoPared<=0||altoPared<=0||anchoRollo<=0||largoRollo<=0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos. Puedes usar coma o punto para decimales.";
+return;
+}
+
+let areaPared=anchoPared*altoPared;
+let areaRollo=anchoRollo*largoRollo;
+let areaConMargen=areaPared*(1+desperdicio/100);
+let rollos=Math.ceil(areaConMargen/areaRollo);
+
+let tirasPorRollo=Math.floor(largoRollo/altoPared);
+let tirasNecesarias=Math.ceil(anchoPared/anchoRollo);
+let rollosPorTiras=Math.ceil(tirasNecesarias/tirasPorRollo);
+
+let rollosRecomendados=Math.max(rollos, rollosPorTiras);
+
+document.getElementById("resultado").innerHTML=
+"Superficie de pared: "+areaPared.toFixed(2)+" m²<br>"+
+"Superficie con margen: "+areaConMargen.toFixed(2)+" m²<br>"+
+"Superficie por rollo: "+areaRollo.toFixed(2)+" m²<br>"+
+"Tiras necesarias: "+tirasNecesarias+"<br>"+
+"Tiras por rollo: "+tirasPorRollo+"<br>"+
+"Rollos recomendados: "+rollosRecomendados;
+}
+</script>
+
+</body>
+</html>
