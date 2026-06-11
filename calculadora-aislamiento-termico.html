@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Aislamiento Térmico | Tuberías de Calefacción y ACS</title>
+<meta name="description" content="Calculadora de aislamiento térmico online. Estima el espesor recomendado de aislamiento para tuberías de ACS, calefacción y climatización según diámetro y temperatura.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:19px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Aislamiento Térmico</h1>
+<p>Calcula un espesor orientativo de aislamiento para tuberías de ACS, calefacción y climatización.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-acs.html">ACS</a>
+<a href="calculadora-hidraulica-climatizacion.html">Climatización</a>
+<a href="calculadora-ventilacion-rite.html">Ventilación RITE</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcular aislamiento térmico de tubería</h2>
+
+<label>Diámetro exterior de la tubería (mm)</label>
+<input type="text" inputmode="decimal" id="diametro" placeholder="Ejemplo: 32">
+
+<label>Longitud de la tubería (m)</label>
+<input type="text" inputmode="decimal" id="longitud" placeholder="Ejemplo: 20">
+
+<label>Temperatura del fluido (°C)</label>
+<input type="text" inputmode="decimal" id="tempFluido" placeholder="Ejemplo: 60">
+
+<label>Temperatura ambiente (°C)</label>
+<input type="text" inputmode="decimal" id="tempAmbiente" value="20">
+
+<label>Tipo de instalación</label>
+<select id="tipo">
+<option value="interior">Interior</option>
+<option value="exterior">Exterior</option>
+<option value="frio">Agua fría / refrigeración</option>
+</select>
+
+<label>Tipo de aislamiento</label>
+<select id="aislamiento">
+<option value="0.040">Aislamiento estándar λ 0,040 W/m·K</option>
+<option value="0.035">Aislamiento mejorado λ 0,035 W/m·K</option>
+<option value="0.032">Aislamiento alto rendimiento λ 0,032 W/m·K</option>
+</select>
+
+<button type="button" onclick="calcularAislamiento()">Calcular aislamiento</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Para qué sirve el aislamiento térmico?</h2>
+<p>
+El aislamiento térmico reduce las pérdidas de calor en tuberías de ACS y calefacción,
+ayuda a evitar condensaciones en circuitos de frío y mejora la eficiencia energética de la instalación.
+</p>
+</div>
+
+<div class="card">
+<h2>Espesores orientativos</h2>
+<p>
+El espesor recomendado depende del diámetro de la tubería, la temperatura del fluido,
+el ambiente, el tipo de instalación y la conductividad térmica del aislamiento.
+</p>
+<p>
+Esta calculadora ofrece una recomendación orientativa útil para una primera estimación.
+</p>
+</div>
+
+<div class="card">
+<h2>Aviso importante</h2>
+<p>
+Esta herramienta no sustituye el cumplimiento del RITE ni de la normativa aplicable.
+Para proyectos reales se deben comprobar tablas oficiales, temperatura de trabajo,
+conductividad, ubicación, humedad, riesgo de condensación y criterios del proyecto técnico.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function calcularAislamiento(){
+
+let diametro=convertirNumero(document.getElementById("diametro").value);
+let longitud=convertirNumero(document.getElementById("longitud").value);
+let tempFluido=convertirNumero(document.getElementById("tempFluido").value);
+let tempAmbiente=convertirNumero(document.getElementById("tempAmbiente").value);
+let tipo=document.getElementById("tipo").value;
+let lambda=convertirNumero(document.getElementById("aislamiento").value);
+
+if(isNaN(diametro)||isNaN(longitud)||isNaN(tempFluido)||isNaN(tempAmbiente)||isNaN(lambda)||diametro<=0||longitud<=0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos. Puedes usar coma o punto para decimales.";
+return;
+}
+
+let deltaT=Math.abs(tempFluido-tempAmbiente);
+let espesor=0;
+
+if(diametro<=22){
+espesor=20;
+}else if(diametro<=35){
+espesor=25;
+}else if(diametro<=60){
+espesor=30;
+}else if(diametro<=90){
+espesor=40;
+}else{
+espesor=50;
+}
+
+if(deltaT>40){espesor+=5;}
+if(deltaT>60){espesor+=5;}
+if(tipo==="exterior"){espesor+=10;}
+if(tipo==="frio"){espesor+=5;}
+if(lambda<=0.035){espesor-=5;}
+if(lambda<=0.032){espesor-=5;}
+
+if(espesor<15){espesor=15;}
+
+let superficie=Math.PI*(diametro/1000)*longitud;
+let perdidaSinAislar=superficie*deltaT*8;
+let reduccion=0;
+
+if(espesor<20){reduccion=45;}
+else if(espesor<30){reduccion=60;}
+else if(espesor<40){reduccion=70;}
+else if(espesor<50){reduccion=78;}
+else{reduccion=85;}
+
+let perdidaAislada=perdidaSinAislar*(1-reduccion/100);
+
+document.getElementById("resultado").innerHTML=
+"Salto térmico: "+deltaT.toFixed(1)+" °C<br>"+
+"Espesor orientativo recomendado: "+espesor.toFixed(0)+" mm<br>"+
+"Superficie aproximada de tubería: "+superficie.toFixed(2)+" m²<br>"+
+"Pérdida estimada sin aislar: "+perdidaSinAislar.toFixed(0)+" W<br>"+
+"Pérdida estimada aislada: "+perdidaAislada.toFixed(0)+" W<br>"+
+"Reducción aproximada: "+reduccion+" %";
+}
+</script>
+
+</body>
+</html>
