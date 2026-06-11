@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora Hidráulica de Climatización | Caudal Calefacción y Refrigeración</title>
+<meta name="description" content="Calculadora hidráulica de climatización online. Calcula el caudal de agua necesario en calefacción o refrigeración según potencia térmica y salto térmico.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:19px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora Hidráulica de Climatización</h1>
+<p>Calcula el caudal de agua necesario en circuitos de calefacción y refrigeración.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-acs.html">ACS</a>
+<a href="calculadora-ventilacion-rite.html">Ventilación RITE</a>
+<a href="calculadora-caudal-agua.html">Caudal</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcular caudal hidráulico</h2>
+
+<label>Potencia térmica</label>
+<input type="text" inputmode="decimal" id="potencia" placeholder="Ejemplo: 25">
+
+<label>Unidad de potencia</label>
+<select id="unidad">
+<option value="kw">kW</option>
+<option value="w">W</option>
+</select>
+
+<label>Tipo de instalación</label>
+<select id="tipo">
+<option value="calefaccion">Calefacción</option>
+<option value="refrigeracion">Refrigeración</option>
+</select>
+
+<label>Salto térmico ΔT (°C)</label>
+<input type="text" inputmode="decimal" id="deltaT" value="5">
+
+<button type="button" onclick="calcularCaudal()">Calcular caudal</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Qué calcula esta herramienta?</h2>
+<p>
+Esta calculadora estima el caudal de agua necesario en un circuito hidráulico de climatización,
+ya sea para calefacción o refrigeración, a partir de la potencia térmica y el salto térmico.
+</p>
+</div>
+
+<div class="card">
+<h2>Fórmula utilizada</h2>
+<p>
+De forma aproximada, para agua:
+</p>
+<p><strong>Caudal (m³/h) = Potencia (kW) / (1,16 × ΔT)</strong></p>
+<p>
+Donde ΔT es la diferencia de temperatura entre impulsión y retorno.
+</p>
+</div>
+
+<div class="card">
+<h2>Valores habituales de salto térmico</h2>
+<ul>
+<li>Suelo radiante: 5 °C aprox.</li>
+<li>Radiadores: 10-20 °C aprox.</li>
+<li>Fan coils: 5 °C aprox.</li>
+<li>Agua fría en climatización: 5-7 °C aprox.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Aviso importante</h2>
+<p>
+Esta calculadora es orientativa. Para diseñar instalaciones hidráulicas reales se deben considerar
+pérdidas de carga, equilibrado, bombas, válvulas, caudal mínimo de equipos, normativa RITE y proyecto técnico.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function calcularCaudal(){
+
+let potencia=convertirNumero(document.getElementById("potencia").value);
+let unidad=document.getElementById("unidad").value;
+let deltaT=convertirNumero(document.getElementById("deltaT").value);
+let tipo=document.getElementById("tipo").value;
+
+if(isNaN(potencia)||isNaN(deltaT)||potencia<=0||deltaT<=0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos. Puedes usar coma o punto para decimales.";
+return;
+}
+
+if(unidad==="w"){
+potencia=potencia/1000;
+}
+
+let caudalM3h=potencia/(1.16*deltaT);
+let caudalLh=caudalM3h*1000;
+let caudalLmin=caudalLh/60;
+
+let recomendacion="";
+if(tipo==="calefaccion"){
+recomendacion="Caudal orientativo para circuito de calefacción";
+}else{
+recomendacion="Caudal orientativo para circuito de refrigeración";
+}
+
+document.getElementById("resultado").innerHTML=
+"Potencia térmica: "+potencia.toFixed(2)+" kW<br>"+
+"Salto térmico ΔT: "+deltaT.toFixed(1)+" °C<br>"+
+"Caudal necesario: "+caudalM3h.toFixed(2)+" m³/h<br>"+
+"Caudal necesario: "+caudalLh.toFixed(0)+" L/h<br>"+
+"Caudal necesario: "+caudalLmin.toFixed(1)+" L/min<br>"+
+recomendacion;
+}
+</script>
+
+</body>
+</html>
