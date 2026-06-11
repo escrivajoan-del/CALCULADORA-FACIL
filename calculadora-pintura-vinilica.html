@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Pintura Vinílica | Litros, Rendimiento y Manos</title>
+<meta name="description" content="Calculadora de pintura vinílica online. Calcula litros necesarios según metros cuadrados, rendimiento, manos de pintura y desperdicio.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:19px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Pintura Vinílica</h1>
+<p>Calcula cuántos litros de pintura vinílica necesitas según superficie, rendimiento y número de manos.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-pintura.html">Pintura</a>
+<a href="calculadora-papel-pintado.html">Papel pintado</a>
+<a href="calculadora-resina-epoxica.html">Resina epóxica</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcular pintura vinílica</h2>
+
+<label>Superficie a pintar (m²)</label>
+<input type="text" inputmode="decimal" id="superficie" placeholder="Ejemplo: 80">
+
+<label>Rendimiento de la pintura (m²/L por mano)</label>
+<input type="text" inputmode="decimal" id="rendimiento" value="10">
+
+<label>Número de manos</label>
+<select id="manos">
+<option value="1">1 mano</option>
+<option value="2" selected>2 manos</option>
+<option value="3">3 manos</option>
+</select>
+
+<label>Desperdicio o margen (%)</label>
+<select id="margen">
+<option value="5">5% - Superficie sencilla</option>
+<option value="10" selected>10% - Recomendado</option>
+<option value="15">15% - Pared porosa o irregular</option>
+<option value="20">20% - Cambio fuerte de color</option>
+</select>
+
+<button type="button" onclick="calcularVinilica()">Calcular litros</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Qué es la pintura vinílica?</h2>
+<p>
+La pintura vinílica es una pintura al agua muy utilizada en interiores por su buena adherencia,
+facilidad de aplicación y acabado decorativo. Suele emplearse en paredes y techos de viviendas,
+locales y oficinas.
+</p>
+</div>
+
+<div class="card">
+<h2>Rendimiento habitual</h2>
+<p>
+El rendimiento de la pintura vinílica suele estar entre 8 y 12 m² por litro y mano,
+aunque depende de la marca, el soporte, la porosidad y el color aplicado.
+</p>
+</div>
+
+<div class="card">
+<h2>Consejos de aplicación</h2>
+<ul>
+<li>Aplica imprimación si la pared es muy porosa.</li>
+<li>Respeta los tiempos de secado entre manos.</li>
+<li>Añade margen si hay cambios fuertes de color.</li>
+<li>Consulta siempre la ficha técnica del fabricante.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Aviso importante</h2>
+<p>
+Esta calculadora es orientativa. El consumo real puede variar según el tipo de soporte,
+la herramienta de aplicación, el color, la absorción y el rendimiento indicado por el fabricante.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function calcularVinilica(){
+
+let superficie=convertirNumero(document.getElementById("superficie").value);
+let rendimiento=convertirNumero(document.getElementById("rendimiento").value);
+let manos=convertirNumero(document.getElementById("manos").value);
+let margen=convertirNumero(document.getElementById("margen").value);
+
+if(isNaN(superficie)||isNaN(rendimiento)||isNaN(manos)||isNaN(margen)||superficie<=0||rendimiento<=0||manos<=0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos. Puedes usar coma o punto para decimales.";
+return;
+}
+
+let litrosBase=(superficie*manos)/rendimiento;
+let litrosFinal=litrosBase*(1+margen/100);
+
+let envase4=Math.ceil(litrosFinal/4);
+let envase15=Math.ceil(litrosFinal/15);
+
+document.getElementById("resultado").innerHTML=
+"Litros sin margen: "+litrosBase.toFixed(2)+" L<br>"+
+"Litros recomendados: "+litrosFinal.toFixed(2)+" L<br>"+
+"Equivalente aproximado: "+envase4+" botes de 4 L<br>"+
+"Equivalente aproximado: "+envase15+" cubos de 15 L";
+}
+</script>
+
+</body>
+</html>
