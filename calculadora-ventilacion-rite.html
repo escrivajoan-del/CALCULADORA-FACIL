@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Ventilación RITE | Caudal de Aire e IDA</title>
+<meta name="description" content="Calculadora de ventilación RITE online. Estima el caudal de aire exterior necesario según superficie, ocupación, uso del local y calidad IDA.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:19px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Ventilación RITE</h1>
+<p>Calcula el caudal de aire exterior orientativo según uso, ocupación y calidad de aire interior IDA.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-caudal-agua.html">Caudal</a>
+<a href="calculadora-consumo-electrico.html">Consumo eléctrico</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcular caudal de ventilación</h2>
+
+<label>Superficie del local (m²)</label>
+<input type="text" inputmode="decimal" id="superficie" placeholder="Ejemplo: 80">
+
+<label>Altura media del local (m)</label>
+<input type="text" inputmode="decimal" id="altura" value="2,7">
+
+<label>Número estimado de ocupantes</label>
+<input type="text" inputmode="decimal" id="ocupantes" placeholder="Ejemplo: 10">
+
+<label>Tipo de uso</label>
+<select id="uso">
+<option value="vivienda">Vivienda</option>
+<option value="oficina">Oficina</option>
+<option value="aula">Aula o formación</option>
+<option value="comercio">Comercio</option>
+<option value="restaurante">Restaurante o cafetería</option>
+<option value="gimnasio">Gimnasio o actividad física</option>
+</select>
+
+<label>Calidad de aire interior objetivo</label>
+<select id="ida">
+<option value="20">IDA 1 - Calidad alta</option>
+<option value="12.5">IDA 2 - Calidad buena</option>
+<option value="8">IDA 3 - Calidad media</option>
+<option value="5">IDA 4 - Calidad baja</option>
+</select>
+
+<button type="button" onclick="calcularVentilacion()">Calcular ventilación</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Qué es la ventilación RITE?</h2>
+<p>
+La ventilación en edificios permite renovar el aire interior, reducir contaminantes y mejorar la calidad del ambiente.
+En instalaciones térmicas, el RITE establece criterios para garantizar una calidad adecuada del aire interior.
+</p>
+</div>
+
+<div class="card">
+<h2>¿Qué es IDA?</h2>
+<p>
+IDA significa calidad de aire interior. De forma orientativa:
+</p>
+<ul>
+<li><strong>IDA 1:</strong> calidad alta.</li>
+<li><strong>IDA 2:</strong> calidad buena.</li>
+<li><strong>IDA 3:</strong> calidad media.</li>
+<li><strong>IDA 4:</strong> calidad baja.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Cómo interpretar el resultado</h2>
+<p>
+El resultado muestra el volumen del local, el caudal recomendado en m³/h y una estimación de renovaciones por hora.
+Para proyectos reales se debe comprobar normativa, ocupación, uso específico, extracción, recuperación de calor y equilibrado de caudales.
+</p>
+</div>
+
+<div class="card">
+<h2>Aviso importante</h2>
+<p>
+Esta calculadora es orientativa y no sustituye un proyecto técnico ni un cálculo profesional conforme al RITE, CTE u otra normativa aplicable.
+Para instalaciones reales consulta con un técnico competente o instalador autorizado.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function calcularVentilacion(){
+
+let superficie=convertirNumero(document.getElementById("superficie").value);
+let altura=convertirNumero(document.getElementById("altura").value);
+let ocupantes=convertirNumero(document.getElementById("ocupantes").value);
+let ida=convertirNumero(document.getElementById("ida").value);
+let uso=document.getElementById("uso").value;
+
+if(isNaN(superficie)||isNaN(altura)||isNaN(ocupantes)||isNaN(ida)||superficie<=0||altura<=0||ocupantes<=0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos. Puedes usar coma o punto para decimales.";
+return;
+}
+
+let factorUso=1;
+
+if(uso==="vivienda"){factorUso=0.9;}
+if(uso==="oficina"){factorUso=1;}
+if(uso==="aula"){factorUso=1.15;}
+if(uso==="comercio"){factorUso=1.05;}
+if(uso==="restaurante"){factorUso=1.4;}
+if(uso==="gimnasio"){factorUso=1.6;}
+
+let volumen=superficie*altura;
+let caudalPersona=ocupantes*ida*3.6;
+let caudalFinal=caudalPersona*factorUso;
+let renovaciones=caudalFinal/volumen;
+
+let estado="";
+if(renovaciones<1){
+estado="Renovación baja";
+}else if(renovaciones<=3){
+estado="Renovación habitual";
+}else if(renovaciones<=6){
+estado="Renovación alta";
+}else{
+estado="Renovación muy alta";
+}
+
+document.getElementById("resultado").innerHTML=
+"Volumen del local: "+volumen.toFixed(1)+" m³<br>"+
+"Caudal base por ocupación: "+caudalPersona.toFixed(0)+" m³/h<br>"+
+"Caudal recomendado ajustado: "+caudalFinal.toFixed(0)+" m³/h<br>"+
+"Renovaciones aproximadas: "+renovaciones.toFixed(2)+" renovaciones/hora<br>"+
+"Resultado orientativo: "+estado;
+}
+</script>
+
+</body>
+</html>
