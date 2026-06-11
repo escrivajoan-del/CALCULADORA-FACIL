@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Área de Paredes y Techos | m² para Pintar</title>
+<meta name="description" content="Calculadora de área de paredes y techos online. Calcula los metros cuadrados para pintar descontando puertas y ventanas.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:19px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Área de Paredes y Techos</h1>
+<p>Calcula los metros cuadrados de paredes y techo para pintar una habitación.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-pintura.html">Pintura</a>
+<a href="calculadora-pintura-vinilica.html">Pintura vinílica</a>
+<a href="calculadora-papel-pintado.html">Papel pintado</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcular m² de paredes y techo</h2>
+
+<label>Largo de la habitación (m)</label>
+<input type="text" inputmode="decimal" id="largo" placeholder="Ejemplo: 5">
+
+<label>Ancho de la habitación (m)</label>
+<input type="text" inputmode="decimal" id="ancho" placeholder="Ejemplo: 4">
+
+<label>Altura de paredes (m)</label>
+<input type="text" inputmode="decimal" id="altura" placeholder="Ejemplo: 2,6">
+
+<label>Número de puertas</label>
+<input type="text" inputmode="decimal" id="puertas" value="1">
+
+<label>Área media por puerta (m²)</label>
+<input type="text" inputmode="decimal" id="areaPuerta" value="1,8">
+
+<label>Número de ventanas</label>
+<input type="text" inputmode="decimal" id="ventanas" value="1">
+
+<label>Área media por ventana (m²)</label>
+<input type="text" inputmode="decimal" id="areaVentana" value="1,2">
+
+<label>¿Incluir techo?</label>
+<select id="incluirTecho">
+<option value="si" selected>Sí, incluir techo</option>
+<option value="no">No, solo paredes</option>
+</select>
+
+<button type="button" onclick="calcularArea()">Calcular área</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Cómo se calcula el área para pintar?</h2>
+<p>
+Para calcular los metros cuadrados de paredes se multiplica el perímetro de la habitación por la altura.
+Después se descuentan puertas y ventanas. Si se pinta el techo, se suma la superficie del suelo.
+</p>
+</div>
+
+<div class="card">
+<h2>Fórmulas utilizadas</h2>
+<p><strong>Área paredes = 2 × (largo + ancho) × altura</strong></p>
+<p><strong>Área techo = largo × ancho</strong></p>
+<p><strong>Área final = paredes + techo - puertas - ventanas</strong></p>
+</div>
+
+<div class="card">
+<h2>Consejos para pintores</h2>
+<ul>
+<li>Mide cada estancia por separado.</li>
+<li>Descuenta puertas y ventanas grandes.</li>
+<li>Añade margen si hay muchas esquinas o irregularidades.</li>
+<li>Usa el resultado para calcular litros de pintura necesarios.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Aviso importante</h2>
+<p>
+Esta calculadora es orientativa. Las medidas reales pueden variar según huecos, pilares, armarios,
+falsos techos, molduras o superficies irregulares.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function calcularArea(){
+
+let largo=convertirNumero(document.getElementById("largo").value);
+let ancho=convertirNumero(document.getElementById("ancho").value);
+let altura=convertirNumero(document.getElementById("altura").value);
+let puertas=convertirNumero(document.getElementById("puertas").value);
+let areaPuerta=convertirNumero(document.getElementById("areaPuerta").value);
+let ventanas=convertirNumero(document.getElementById("ventanas").value);
+let areaVentana=convertirNumero(document.getElementById("areaVentana").value);
+let incluirTecho=document.getElementById("incluirTecho").value;
+
+if(isNaN(largo)||isNaN(ancho)||isNaN(altura)||isNaN(puertas)||isNaN(areaPuerta)||isNaN(ventanas)||isNaN(areaVentana)||largo<=0||ancho<=0||altura<=0||puertas<0||ventanas<0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos. Puedes usar coma o punto para decimales.";
+return;
+}
+
+let areaParedes=2*(largo+ancho)*altura;
+let areaTecho=largo*ancho;
+let descuentoPuertas=puertas*areaPuerta;
+let descuentoVentanas=ventanas*areaVentana;
+let descuentoTotal=descuentoPuertas+descuentoVentanas;
+
+let areaFinal=areaParedes-descuentoTotal;
+
+if(incluirTecho==="si"){
+areaFinal+=areaTecho;
+}
+
+if(areaFinal<0){
+areaFinal=0;
+}
+
+document.getElementById("resultado").innerHTML=
+"Área paredes: "+areaParedes.toFixed(2)+" m²<br>"+
+"Área techo: "+areaTecho.toFixed(2)+" m²<br>"+
+"Descuento puertas: "+descuentoPuertas.toFixed(2)+" m²<br>"+
+"Descuento ventanas: "+descuentoVentanas.toFixed(2)+" m²<br>"+
+"Área total para pintar: "+areaFinal.toFixed(2)+" m²";
+}
+</script>
+
+</body>
+</html>
