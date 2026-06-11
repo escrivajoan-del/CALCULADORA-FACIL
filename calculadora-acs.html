@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora ACS | Agua Caliente Sanitaria y Energía Necesaria</title>
+<meta name="description" content="Calculadora de Agua Caliente Sanitaria ACS online. Estima demanda diaria, volumen de acumulación y energía necesaria en kWh para viviendas e instalaciones.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:19px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora ACS</h1>
+<p>Calcula la demanda de Agua Caliente Sanitaria y la energía necesaria para calentar el agua.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-consumo-electrico.html">Consumo eléctrico</a>
+<a href="calculadora-ventilacion-rite.html">Ventilación RITE</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcular Agua Caliente Sanitaria</h2>
+
+<label>Número de personas</label>
+<input type="text" inputmode="decimal" id="personas" placeholder="Ejemplo: 4">
+
+<label>Consumo ACS por persona y día</label>
+<select id="litrosPersona">
+<option value="28">Uso bajo - 28 L/persona/día</option>
+<option value="35" selected>Uso medio - 35 L/persona/día</option>
+<option value="45">Uso alto - 45 L/persona/día</option>
+<option value="60">Uso muy alto - 60 L/persona/día</option>
+</select>
+
+<label>Temperatura del agua fría (°C)</label>
+<input type="text" inputmode="decimal" id="tempFria" value="12">
+
+<label>Temperatura de acumulación o uso (°C)</label>
+<input type="text" inputmode="decimal" id="tempCaliente" value="60">
+
+<label>Rendimiento del sistema (%)</label>
+<input type="text" inputmode="decimal" id="rendimiento" value="90">
+
+<button type="button" onclick="calcularACS()">Calcular ACS</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Qué es el ACS?</h2>
+<p>
+ACS significa Agua Caliente Sanitaria. Es el agua caliente destinada al uso doméstico o sanitario:
+duchas, lavabos, fregaderos y otros puntos de consumo.
+</p>
+</div>
+
+<div class="card">
+<h2>¿Qué calcula esta herramienta?</h2>
+<p>
+Esta calculadora estima la demanda diaria de ACS, el volumen orientativo necesario y la energía térmica aproximada para calentar el agua.
+</p>
+<p>
+La energía depende del volumen de agua, de la diferencia de temperatura y del rendimiento del equipo.
+</p>
+</div>
+
+<div class="card">
+<h2>Fórmula utilizada</h2>
+<p>
+La energía térmica necesaria se calcula de forma orientativa con:
+</p>
+<p><strong>E = litros × ΔT × 1,16 / 1000</strong></p>
+<p>
+Donde ΔT es la diferencia entre la temperatura caliente y la temperatura del agua fría.
+</p>
+</div>
+
+<div class="card">
+<h2>Aviso importante</h2>
+<p>
+Esta calculadora es orientativa. Para instalaciones reales de ACS, acumuladores, aerotermia, calderas o sistemas solares térmicos se debe comprobar normativa, simultaneidad, pérdidas, acumulación y criterios del proyecto técnico.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function calcularACS(){
+
+let personas=convertirNumero(document.getElementById("personas").value);
+let litrosPersona=convertirNumero(document.getElementById("litrosPersona").value);
+let tempFria=convertirNumero(document.getElementById("tempFria").value);
+let tempCaliente=convertirNumero(document.getElementById("tempCaliente").value);
+let rendimiento=convertirNumero(document.getElementById("rendimiento").value);
+
+if(isNaN(personas)||isNaN(litrosPersona)||isNaN(tempFria)||isNaN(tempCaliente)||isNaN(rendimiento)||personas<=0||litrosPersona<=0||rendimiento<=0||tempCaliente<=tempFria){
+document.getElementById("resultado").innerHTML="Introduce valores válidos. La temperatura caliente debe ser mayor que la fría.";
+return;
+}
+
+let litrosDia=personas*litrosPersona;
+let deltaT=tempCaliente-tempFria;
+let energiaUtil=litrosDia*deltaT*1.16/1000;
+let energiaReal=energiaUtil/(rendimiento/100);
+
+let acumuladorMin=litrosDia*0.6;
+let acumuladorMax=litrosDia*1.0;
+
+document.getElementById("resultado").innerHTML=
+"Demanda diaria ACS: "+litrosDia.toFixed(0)+" litros/día<br>"+
+"Salto térmico: "+deltaT.toFixed(1)+" °C<br>"+
+"Energía útil necesaria: "+energiaUtil.toFixed(2)+" kWh/día<br>"+
+"Energía estimada con rendimiento: "+energiaReal.toFixed(2)+" kWh/día<br>"+
+"Acumulador orientativo: "+acumuladorMin.toFixed(0)+" - "+acumuladorMax.toFixed(0)+" litros";
+}
+</script>
+
+</body>
+</html>
