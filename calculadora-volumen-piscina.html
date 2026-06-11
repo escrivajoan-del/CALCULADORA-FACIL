@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Volumen de Piscina | Rectangular, Redonda y Ovalada</title>
+<meta name="description" content="Calculadora de volumen de piscina online. Calcula litros y metros cúbicos de agua para piscinas rectangulares, redondas y ovaladas.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:19px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Volumen de Piscina</h1>
+<p>Calcula los metros cúbicos y litros de agua de una piscina rectangular, redonda u ovalada.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-bomba-filtro-piscina.html">Bomba y filtro</a>
+<a href="calculadora-caudal-agua.html">Caudal</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcular volumen de piscina</h2>
+
+<label>Forma de la piscina</label>
+<select id="forma" onchange="cambiarCampos()">
+<option value="rectangular">Rectangular</option>
+<option value="redonda">Redonda</option>
+<option value="ovalada">Ovalada</option>
+</select>
+
+<div id="camposRectangular">
+<label>Largo de la piscina (m)</label>
+<input type="text" inputmode="decimal" id="largo" placeholder="Ejemplo: 8">
+
+<label>Ancho de la piscina (m)</label>
+<input type="text" inputmode="decimal" id="ancho" placeholder="Ejemplo: 4">
+</div>
+
+<div id="camposRedonda" style="display:none">
+<label>Diámetro de la piscina (m)</label>
+<input type="text" inputmode="decimal" id="diametro" placeholder="Ejemplo: 5">
+</div>
+
+<div id="camposOvalada" style="display:none">
+<label>Largo máximo de la piscina ovalada (m)</label>
+<input type="text" inputmode="decimal" id="largoOval" placeholder="Ejemplo: 8">
+
+<label>Ancho máximo de la piscina ovalada (m)</label>
+<input type="text" inputmode="decimal" id="anchoOval" placeholder="Ejemplo: 4">
+</div>
+
+<label>Profundidad media (m)</label>
+<input type="text" inputmode="decimal" id="profundidad" placeholder="Ejemplo: 1,5">
+
+<button type="button" onclick="calcularVolumen()">Calcular volumen</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Cómo calcular el volumen de una piscina?</h2>
+<p>
+El volumen de una piscina depende de su forma, superficie y profundidad media.
+El resultado se expresa en metros cúbicos y litros.
+</p>
+</div>
+
+<div class="card">
+<h2>Fórmulas utilizadas</h2>
+<ul>
+<li><strong>Rectangular:</strong> largo × ancho × profundidad media.</li>
+<li><strong>Redonda:</strong> π × radio² × profundidad media.</li>
+<li><strong>Ovalada:</strong> largo × ancho × profundidad media × 0,785.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>¿Para qué sirve saber los m³ de una piscina?</h2>
+<ul>
+<li>Calcular la bomba y el filtro adecuados.</li>
+<li>Dosificar cloro, pH, alguicida y otros productos.</li>
+<li>Estimar el tiempo de filtración diario.</li>
+<li>Calcular consumo de agua y llenado.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Aviso importante</h2>
+<p>
+Esta calculadora es orientativa. En piscinas con formas irregulares, escaleras, playas o profundidades variables,
+el volumen real puede variar.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function cambiarCampos(){
+let forma=document.getElementById("forma").value;
+
+document.getElementById("camposRectangular").style.display="none";
+document.getElementById("camposRedonda").style.display="none";
+document.getElementById("camposOvalada").style.display="none";
+
+if(forma==="rectangular"){
+document.getElementById("camposRectangular").style.display="block";
+}
+if(forma==="redonda"){
+document.getElementById("camposRedonda").style.display="block";
+}
+if(forma==="ovalada"){
+document.getElementById("camposOvalada").style.display="block";
+}
+}
+
+function calcularVolumen(){
+
+let forma=document.getElementById("forma").value;
+let profundidad=convertirNumero(document.getElementById("profundidad").value);
+
+if(isNaN(profundidad)||profundidad<=0){
+document.getElementById("resultado").innerHTML="Introduce una profundidad válida.";
+return;
+}
+
+let volumen=0;
+
+if(forma==="rectangular"){
+let largo=convertirNumero(document.getElementById("largo").value);
+let ancho=convertirNumero(document.getElementById("ancho").value);
+
+if(isNaN(largo)||isNaN(ancho)||largo<=0||ancho<=0){
+document.getElementById("resultado").innerHTML="Introduce largo y ancho válidos.";
+return;
+}
+
+volumen=largo*ancho*profundidad;
+}
+
+if(forma==="redonda"){
+let diametro=convertirNumero(document.getElementById("diametro").value);
+
+if(isNaN(diametro)||diametro<=0){
+document.getElementById("resultado").innerHTML="Introduce un diámetro válido.";
+return;
+}
+
+let radio=diametro/2;
+volumen=Math.PI*Math.pow(radio,2)*profundidad;
+}
+
+if(forma==="ovalada"){
+let largoOval=convertirNumero(document.getElementById("largoOval").value);
+let anchoOval=convertirNumero(document.getElementById("anchoOval").value);
+
+if(isNaN(largoOval)||isNaN(anchoOval)||largoOval<=0||anchoOval<=0){
+document.getElementById("resultado").innerHTML="Introduce largo y ancho válidos.";
+return;
+}
+
+volumen=largoOval*anchoOval*profundidad*0.785;
+}
+
+let litros=volumen*1000;
+
+document.getElementById("resultado").innerHTML=
+"Volumen aproximado: "+volumen.toFixed(2)+" m³<br>"+
+"Litros aproximados: "+litros.toFixed(0)+" litros<br>"+
+"Equivalencia: "+volumen.toFixed(2)+" metros cúbicos de agua";
+}
+</script>
+
+</body>
+</html>
