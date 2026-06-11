@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Químicos para Piscina | pH, Cloro y Alguicida</title>
+<meta name="description" content="Calculadora de químicos para piscina online. Calcula dosis orientativa de minorador de pH, incrementador de pH, cloro de choque y alguicida preventivo.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:19px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Químicos para Piscina</h1>
+<p>Calcula dosis orientativas de pH, cloro de choque y alguicida según el volumen de tu piscina.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-volumen-piscina.html">Volumen Piscina</a>
+<a href="calculadora-filtracion-piscina.html">Filtración</a>
+<a href="calculadora-bomba-filtro-piscina.html">Bomba y Filtro</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcular productos químicos</h2>
+
+<label>Volumen de la piscina (m³)</label>
+<input type="text" inputmode="decimal" id="volumen" placeholder="Ejemplo: 50">
+
+<label>Tratamiento a calcular</label>
+<select id="tratamiento">
+<option value="phmenos">Minorador de pH</option>
+<option value="phmas">Incrementador de pH</option>
+<option value="clorochoque">Cloración de choque</option>
+<option value="alguicida">Alguicida preventivo</option>
+</select>
+
+<label>pH actual (solo para pH)</label>
+<input type="text" inputmode="decimal" id="phActual" placeholder="Ejemplo: 8,0">
+
+<label>pH objetivo</label>
+<input type="text" inputmode="decimal" id="phObjetivo" value="7,4">
+
+<label>Concentración o dosis del fabricante</label>
+<select id="dosis">
+<option value="estandar">Dosis estándar orientativa</option>
+<option value="suave">Dosis suave</option>
+<option value="fuerte">Dosis fuerte</option>
+</select>
+
+<button type="button" onclick="calcularQuimicos()">Calcular dosis</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>Valores orientativos del agua de piscina</h2>
+<ul>
+<li><strong>pH recomendado:</strong> aproximadamente 7,2 - 7,6.</li>
+<li><strong>Cloro libre:</strong> depende del sistema de desinfección y normativa aplicable.</li>
+<li><strong>Alguicida:</strong> se usa como preventivo, especialmente en verano o con agua caliente.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Dosis orientativas utilizadas</h2>
+<p>
+Las dosis pueden variar mucho según el fabricante. Esta calculadora utiliza valores aproximados:
+</p>
+<ul>
+<li>pH-: 100 g por cada 10 m³ para bajar unas 0,2 unidades de pH.</li>
+<li>pH+: 100 g por cada 10 m³ para subir unas 0,2 unidades de pH.</li>
+<li>Cloro choque: 15 g por m³ como dosis orientativa.</li>
+<li>Alguicida preventivo: 5 ml por m³ como dosis orientativa.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Consejos de seguridad</h2>
+<ul>
+<li>No mezcles productos químicos entre sí.</li>
+<li>Añade siempre el producto al agua siguiendo la ficha del fabricante.</li>
+<li>Filtra varias horas después del tratamiento.</li>
+<li>No bañarse hasta que los valores estén dentro de rango.</li>
+<li>Usa guantes y gafas si el producto lo requiere.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Aviso importante</h2>
+<p>
+Esta calculadora es orientativa. Lee siempre la etiqueta y ficha técnica del producto.
+Las dosis reales dependen de la concentración, el tipo de producto, la alcalinidad, temperatura,
+radiación solar, uso de la piscina y estado del agua.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function calcularQuimicos(){
+
+let volumen=convertirNumero(document.getElementById("volumen").value);
+let tratamiento=document.getElementById("tratamiento").value;
+let phActual=convertirNumero(document.getElementById("phActual").value);
+let phObjetivo=convertirNumero(document.getElementById("phObjetivo").value);
+let dosis=document.getElementById("dosis").value;
+
+if(isNaN(volumen)||volumen<=0){
+document.getElementById("resultado").innerHTML="Introduce un volumen válido de piscina.";
+return;
+}
+
+let factor=1;
+if(dosis==="suave"){factor=0.75;}
+if(dosis==="fuerte"){factor=1.25;}
+
+let texto="";
+
+if(tratamiento==="phmenos" || tratamiento==="phmas"){
+
+if(isNaN(phActual)||isNaN(phObjetivo)||phActual<=0||phObjetivo<=0){
+document.getElementById("resultado").innerHTML="Introduce pH actual y pH objetivo válidos.";
+return;
+}
+
+let diferencia=Math.abs(phActual-phObjetivo);
+
+if(diferencia===0){
+document.getElementById("resultado").innerHTML="El pH actual ya coincide con el objetivo.";
+return;
+}
+
+let pasos=diferencia/0.2;
+let gramos=100*(volumen/10)*pasos*factor;
+
+if(tratamiento==="phmenos"){
+if(phActual<=phObjetivo){
+document.getElementById("resultado").innerHTML="Para usar minorador, el pH actual debe ser mayor que el objetivo.";
+return;
+}
+texto="Minorador de pH recomendado: "+gramos.toFixed(0)+" g";
+}
+
+if(tratamiento==="phmas"){
+if(phActual>=phObjetivo){
+document.getElementById("resultado").innerHTML="Para usar incrementador, el pH actual debe ser menor que el objetivo.";
+return;
+}
+texto="Incrementador de pH recomendado: "+gramos.toFixed(0)+" g";
+}
+
+texto+="<br>Diferencia de pH: "+diferencia.toFixed(2)+" unidades";
+}
+
+if(tratamiento==="clorochoque"){
+let gramosCloro=15*volumen*factor;
+texto=
+"Cloro de choque orientativo: "+gramosCloro.toFixed(0)+" g<br>"+
+"Equivalente: "+(gramosCloro/1000).toFixed(2)+" kg";
+}
+
+if(tratamiento==="alguicida"){
+let ml=5*volumen*factor;
+texto=
+"Alguicida preventivo orientativo: "+ml.toFixed(0)+" ml<br>"+
+"Equivalente: "+(ml/1000).toFixed(2)+" L";
+}
+
+document.getElementById("resultado").innerHTML=
+"Volumen piscina: "+volumen.toFixed(2)+" m³<br>"+
+texto+"<br>"+
+"Recuerda comprobar siempre la dosis real indicada por el fabricante.";
+}
+</script>
+
+</body>
+</html>
