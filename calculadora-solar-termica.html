@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora Solar Térmica | ACS, Captadores y Pérdidas</title>
+<meta name="description" content="Calculadora solar térmica online. Estima contribución solar para ACS, energía necesaria, pérdidas por orientación e inclinación y superficie de captadores.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:19px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora Solar Térmica</h1>
+<p>Calcula de forma orientativa la contribución solar para ACS y la superficie aproximada de captadores.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-acs.html">ACS</a>
+<a href="calculadora-aislamiento-termico.html">Aislamiento</a>
+<a href="calculadora-ventilacion-rite.html">Ventilación RITE</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcular instalación solar térmica para ACS</h2>
+
+<label>Demanda diaria de ACS (litros/día)</label>
+<input type="text" inputmode="decimal" id="litros" placeholder="Ejemplo: 200">
+
+<label>Temperatura agua fría (°C)</label>
+<input type="text" inputmode="decimal" id="tempFria" value="12">
+
+<label>Temperatura ACS (°C)</label>
+<input type="text" inputmode="decimal" id="tempACS" value="60">
+
+<label>Contribución solar objetivo (%)</label>
+<input type="text" inputmode="decimal" id="contribucion" value="60">
+
+<label>Radiación solar media diaria (kWh/m²·día)</label>
+<input type="text" inputmode="decimal" id="radiacion" value="4,5">
+
+<label>Rendimiento estimado del sistema (%)</label>
+<input type="text" inputmode="decimal" id="rendimiento" value="45">
+
+<label>Orientación de los captadores</label>
+<select id="orientacion">
+<option value="0">Sur - óptima</option>
+<option value="5">Sureste / Suroeste - pérdida 5%</option>
+<option value="12">Este / Oeste - pérdida 12%</option>
+<option value="25">Noreste / Noroeste - pérdida 25%</option>
+</select>
+
+<label>Inclinación de los captadores</label>
+<select id="inclinacion">
+<option value="0">Óptima 30º-45º</option>
+<option value="5">Aceptable 20º-60º - pérdida 5%</option>
+<option value="12">Baja o alta inclinación - pérdida 12%</option>
+<option value="20">Muy desfavorable - pérdida 20%</option>
+</select>
+
+<button type="button" onclick="calcularSolar()">Calcular solar térmica</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Qué calcula esta herramienta?</h2>
+<p>
+Esta calculadora estima la energía diaria necesaria para producir Agua Caliente Sanitaria,
+la parte que debería cubrir la instalación solar térmica y la superficie aproximada de captadores.
+</p>
+</div>
+
+<div class="card">
+<h2>Pérdidas por orientación e inclinación</h2>
+<p>
+La orientación e inclinación de los captadores solares influyen en la energía captada.
+Una orientación sur y una inclinación adecuada suelen ofrecer mejores resultados.
+</p>
+</div>
+
+<div class="card">
+<h2>Fórmula orientativa</h2>
+<p><strong>E = litros × ΔT × 1,16 / 1000</strong></p>
+<p>
+Después se aplica la contribución solar, el rendimiento del sistema y las pérdidas por orientación e inclinación.
+</p>
+</div>
+
+<div class="card">
+<h2>Aviso importante</h2>
+<p>
+Esta herramienta es orientativa. Para proyectos reales de energía solar térmica se deben comprobar normativa, zona climática,
+demanda ACS, acumulación, pérdidas, orientación, inclinación, sombras y criterios del proyecto técnico.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function calcularSolar(){
+
+let litros=convertirNumero(document.getElementById("litros").value);
+let tempFria=convertirNumero(document.getElementById("tempFria").value);
+let tempACS=convertirNumero(document.getElementById("tempACS").value);
+let contribucion=convertirNumero(document.getElementById("contribucion").value);
+let radiacion=convertirNumero(document.getElementById("radiacion").value);
+let rendimiento=convertirNumero(document.getElementById("rendimiento").value);
+let perdidaOrientacion=convertirNumero(document.getElementById("orientacion").value);
+let perdidaInclinacion=convertirNumero(document.getElementById("inclinacion").value);
+
+if(isNaN(litros)||isNaN(tempFria)||isNaN(tempACS)||isNaN(contribucion)||isNaN(radiacion)||isNaN(rendimiento)||litros<=0||tempACS<=tempFria||contribucion<=0||radiacion<=0||rendimiento<=0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos. La temperatura ACS debe ser mayor que la del agua fría.";
+return;
+}
+
+let deltaT=tempACS-tempFria;
+let energiaACS=litros*deltaT*1.16/1000;
+let energiaSolarObjetivo=energiaACS*(contribucion/100);
+
+let perdidaTotal=perdidaOrientacion+perdidaInclinacion;
+if(perdidaTotal>60){perdidaTotal=60;}
+
+let factorPerdidas=1-(perdidaTotal/100);
+let energiaUtilM2=radiacion*(rendimiento/100)*factorPerdidas;
+
+let superficie=energiaSolarObjetivo/energiaUtilM2;
+
+let captadores=Math.ceil(superficie/2);
+
+document.getElementById("resultado").innerHTML=
+"Demanda energética ACS: "+energiaACS.toFixed(2)+" kWh/día<br>"+
+"Energía solar objetivo: "+energiaSolarObjetivo.toFixed(2)+" kWh/día<br>"+
+"Pérdidas orientación + inclinación: "+perdidaTotal.toFixed(0)+" %<br>"+
+"Energía útil estimada por m²: "+energiaUtilM2.toFixed(2)+" kWh/m²·día<br>"+
+"Superficie aproximada de captadores: "+superficie.toFixed(2)+" m²<br>"+
+"Captadores orientativos de 2 m²: "+captadores+" unidades";
+}
+</script>
+
+</body>
+</html>
