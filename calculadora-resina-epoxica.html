@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Resina Epóxica | Consumo y Mezcla A+B</title>
+<meta name="description" content="Calculadora de resina epóxica online. Calcula litros, kilos y componentes A+B según superficie, espesor, densidad y proporción de mezcla.">
+
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222;line-height:1.6}
+header{background:#0b5fff;color:white;padding:40px 20px;text-align:center}
+nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav a{color:#0b5fff;font-weight:bold;text-decoration:none;margin:0 10px;display:inline-block}
+.container{max-width:900px;margin:auto;padding:25px 20px}
+.card{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px}
+input,select,button{width:100%;padding:14px;margin:8px 0;font-size:16px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b5fff;color:white;border:none;font-weight:bold;cursor:pointer}
+.resultado{margin-top:15px;background:#eef4ff;padding:18px;border-radius:12px;font-size:19px;font-weight:bold}
+h2{color:#0b5fff;margin-top:0}
+footer{background:#111827;color:white;text-align:center;padding:25px;margin-top:40px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Calculadora de Resina Epóxica</h1>
+<p>Calcula consumo de resina, kilos totales y mezcla de componentes A+B.</p>
+</header>
+
+<nav>
+<a href="index.html">Inicio</a>
+<a href="calculadora-pintura.html">Pintura</a>
+<a href="calculadora-suelo.html">Suelo</a>
+<a href="calculadora-papel-pintado.html">Papel pintado</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Calcular resina epóxica</h2>
+
+<label>Largo de la superficie (m)</label>
+<input type="text" inputmode="decimal" id="largo" placeholder="Ejemplo: 5">
+
+<label>Ancho de la superficie (m)</label>
+<input type="text" inputmode="decimal" id="ancho" placeholder="Ejemplo: 3">
+
+<label>Espesor de aplicación (mm)</label>
+<input type="text" inputmode="decimal" id="espesor" placeholder="Ejemplo: 2">
+
+<label>Tipo de aplicación</label>
+<select id="tipo">
+<option value="0.5">Capa selladora fina - 0,5 mm aprox.</option>
+<option value="1.5">Pintura/resina de acabado - 1,5 mm aprox.</option>
+<option value="2">Autonivelante decorativo - 2 mm aprox.</option>
+<option value="3">Pavimento industrial - 3 mm aprox.</option>
+<option value="5">Encimera o recubrimiento grueso - 5 mm aprox.</option>
+<option value="10">Mesa o vertido decorativo - 10 mm aprox.</option>
+<option value="manual">Usar espesor introducido arriba</option>
+</select>
+
+<label>Densidad de la resina</label>
+<select id="densidad">
+<option value="1.05">1,05 kg/L - Resina ligera</option>
+<option value="1.10" selected>1,10 kg/L - Valor habitual</option>
+<option value="1.15">1,15 kg/L - Resina más densa</option>
+<option value="1.20">1,20 kg/L - Alta densidad</option>
+</select>
+
+<label>Relación de mezcla A:B</label>
+<select id="mezcla">
+<option value="100:50">100:50</option>
+<option value="100:60">100:60</option>
+<option value="2:1">2:1</option>
+<option value="3:1">3:1</option>
+<option value="1:1">1:1</option>
+</select>
+
+<label>Margen de seguridad (%)</label>
+<input type="text" inputmode="decimal" id="margen" value="10">
+
+<button type="button" onclick="calcularResina()">Calcular resina</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="card">
+<h2>¿Qué calcula esta herramienta?</h2>
+<p>
+Esta calculadora estima la cantidad de resina epóxica necesaria según superficie y espesor.
+Además reparte el peso total entre componente A, normalmente resina base, y componente B,
+normalmente endurecedor.
+</p>
+</div>
+
+<div class="card">
+<h2>Cómo elegir el espesor</h2>
+<ul>
+<li><strong>Capa selladora:</strong> espesores muy bajos, alrededor de 0,3 a 0,5 mm.</li>
+<li><strong>Autonivelante:</strong> espesores habituales de 1,5 a 3 mm.</li>
+<li><strong>Pavimento industrial:</strong> puede requerir espesores superiores.</li>
+<li><strong>Mesas o encapsulados:</strong> dependen del volumen real del molde.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Importancia de la mezcla A+B</h2>
+<p>
+Cada fabricante indica una proporción exacta de mezcla entre resina y endurecedor.
+Respetar esa proporción es fundamental para que el material cure correctamente.
+</p>
+</div>
+
+<div class="card">
+<h2>Aviso importante</h2>
+<p>
+Esta calculadora es orientativa. Comprueba siempre la ficha técnica del fabricante,
+la densidad real, el rendimiento, la relación de mezcla y las condiciones de aplicación.
+</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Calculadoras de Reformas y Hogar
+</footer>
+
+<script>
+function convertirNumero(valor){
+return parseFloat(String(valor).replace(",", "."));
+}
+
+function obtenerRelacion(valor){
+if(valor==="100:50"){return [100,50];}
+if(valor==="100:60"){return [100,60];}
+if(valor==="2:1"){return [2,1];}
+if(valor==="3:1"){return [3,1];}
+if(valor==="1:1"){return [1,1];}
+return [100,50];
+}
+
+function calcularResina(){
+
+let largo=convertirNumero(document.getElementById("largo").value);
+let ancho=convertirNumero(document.getElementById("ancho").value);
+let espesorManual=convertirNumero(document.getElementById("espesor").value);
+let tipo=document.getElementById("tipo").value;
+let densidad=convertirNumero(document.getElementById("densidad").value);
+let margen=convertirNumero(document.getElementById("margen").value);
+let mezcla=document.getElementById("mezcla").value;
+
+if(isNaN(largo)||isNaN(ancho)||isNaN(densidad)||isNaN(margen)||largo<=0||ancho<=0||densidad<=0||margen<0){
+document.getElementById("resultado").innerHTML="Introduce valores válidos. Puedes usar coma o punto para decimales.";
+return;
+}
+
+let espesor;
+
+if(tipo==="manual"){
+if(isNaN(espesorManual)||espesorManual<=0){
+document.getElementById("resultado").innerHTML="Introduce un espesor válido.";
+return;
+}
+espesor=espesorManual;
+}else{
+espesor=convertirNumero(tipo);
+}
+
+let superficie=largo*ancho;
+let volumenLitros=superficie*espesor;
+let volumenConMargen=volumenLitros*(1+margen/100);
+let pesoTotal=volumenConMargen*densidad;
+
+let relacion=obtenerRelacion(mezcla);
+let totalPartes=relacion[0]+relacion[1];
+
+let componenteA=pesoTotal*(relacion[0]/totalPartes);
+let componenteB=pesoTotal*(relacion[1]/totalPartes);
+
+document.getElementById("resultado").innerHTML=
+"Superficie: "+superficie.toFixed(2)+" m²<br>"+
+"Espesor usado: "+espesor.toFixed(2)+" mm<br>"+
+"Volumen sin margen: "+volumenLitros.toFixed(2)+" L<br>"+
+"Volumen con margen: "+volumenConMargen.toFixed(2)+" L<br>"+
+"Peso total mezcla: "+pesoTotal.toFixed(2)+" kg<br>"+
+"Componente A: "+componenteA.toFixed(2)+" kg<br>"+
+"Componente B: "+componenteB.toFixed(2)+" kg";
+}
+</script>
+
+</body>
+</html>
